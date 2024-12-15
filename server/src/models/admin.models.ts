@@ -1,17 +1,32 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from "mongoose";
 
-const UserSchema: Schema = new Schema({
-        username: { 
-            type: String, 
-            required: true 
-        },
-        password: { 
-            type: String, 
-            required: true 
-        }
+export interface ItemInter {
+    name: string;
+    amount: string;
+    condition: string;
+    created_at: Date;
+}
+
+const ItemSchema = new mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
+    name: { 
+        type: String, 
+        required: true 
+    },
+    amount: { 
+        type: String, 
+        required: true 
+    },
+    condition: { 
+        type: String, 
+        required: true 
+    },
+    created_at: { 
+        type: Date, 
+        default: Date.now 
     }
-)
+});
 
-const users = mongoose.model('Users', UserSchema);
+const Items = mongoose.model("Items", ItemSchema);
 
-export default users;
+export default Items;

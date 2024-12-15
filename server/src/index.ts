@@ -1,11 +1,11 @@
 import express from "express";
 import connectDB from "./db-connection";
 import cors from "cors";
-import users from "./models/admin.models";
+import adminRouter from "./routes/admin.route";
 
 
 const app = express();
-const PORT = 8000;
+const PORT = 4000;
 
 app.use(express.json());
 app.use(cors());
@@ -15,6 +15,8 @@ app.get("/", (req, res) => {
   res.send('Hi Ges');
 });
 
-app.listen(8000, () => {
+app.use("/admin", adminRouter);
+
+app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
