@@ -8,7 +8,6 @@ export interface ItemInter {
 }
 
 const ItemSchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
     name: { 
         type: String, 
         required: true 
@@ -23,7 +22,7 @@ const ItemSchema = new mongoose.Schema({
     },
     created_at: { 
         type: Date, 
-        default: Date.now 
+        default: new Date().toDateString()
     }
 });
 
