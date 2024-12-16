@@ -4,5 +4,7 @@ const router = express.Router();
 
 router.get("/", ItemController.ShowAll);
 router.post("/", ItemController.AddItem);
+router.patch("/:id", ItemController.UpdateItem);
+router.delete("/:id", ItemController.DeleteItem);
 
 export default router;

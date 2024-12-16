@@ -22,7 +22,7 @@ const ItemSchema = new mongoose.Schema({
     },
     created_at: { 
         type: Date, 
-        default: new Date().toDateString()
+        default: new Date()
     }
 });
 
