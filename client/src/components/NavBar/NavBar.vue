@@ -1,0 +1,31 @@
+<template>
+    <header>
+      <nav
+        class="flex items-center bg-[#FBFBFB] py-2 shadow-md"
+      >
+        <a class="flex">
+          <img
+            src="../../assets/logo.png"
+            class="h-8 ml-4"
+          />
+        </a>
+      </nav>
+    </header>
+  </template>
+  
+  <script>
+  export default {
+    name: "NavBar",
+  };
+  </script>
+  
+  <style scoped>
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  </style>
+  
