@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 export interface ItemInter {
+    pic: string;
     name: string;
     amount: string;
     condition: string;
@@ -8,6 +9,10 @@ export interface ItemInter {
 }
 
 const ItemSchema = new mongoose.Schema({
+    pic: { 
+        type: String, 
+        required: true 
+    },
     name: { 
         type: String, 
         required: true 
