@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
+// @ts-ignore
 import LoginPage from '@/views/LoginPage.vue'
+// @ts-ignore
 import AdminPage from '@/views/AdminPage.vue'
 
 const router = createRouter({

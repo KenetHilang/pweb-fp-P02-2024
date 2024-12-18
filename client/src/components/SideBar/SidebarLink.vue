@@ -48,7 +48,7 @@ export default {
   user-select: none;
 
   margin: 0.2em 0;
-  padding: 1rem 0.4rem 1rem 0.3rem; 
+  padding: 1rem 0.4rem 1rem 0.6rem; 
   border-radius: 0.25em;
   height: 1.5em;
   

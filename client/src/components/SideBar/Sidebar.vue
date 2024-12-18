@@ -63,9 +63,8 @@ export default {
 
 .collapse-icon {
     position: absolute;
-    bottom: 0;
     padding: 0.75em;
-
+    bottom: 0;
     transition: 0.2s linear;
 }
 

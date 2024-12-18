@@ -1,5 +1,4 @@
 <template>
-    <header>
       <nav
         class="flex items-center bg-[#FBFBFB] py-2 shadow-md"
       >
@@ -10,7 +9,6 @@
           />
         </a>
       </nav>
-    </header>
   </template>
   
   <script>
