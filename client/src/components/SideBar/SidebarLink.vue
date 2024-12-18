@@ -70,5 +70,4 @@ export default {
   width: 25px;
   margin-right: 10px;
 }
-
 </style>

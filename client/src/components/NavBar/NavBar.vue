@@ -1,10 +1,10 @@
 <template>
       <nav
-        class="flex items-center bg-[#FBFBFB] py-2 shadow-md"
+        class="flex items-center bg-[#181C14] py-2 shadow-md"
       >
         <a class="flex">
           <img
-            src="../../assets/logo.png"
+            src="../../assets/logo_dark.png"
             class="h-8 ml-4"
           />
         </a>

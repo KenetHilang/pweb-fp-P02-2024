@@ -30,4 +30,8 @@ export default {
 .view {
   margin-top: 3.5rem; 
 }
+
+::-webkit-scrollbar {
+    display: none;
+}
 </style>
