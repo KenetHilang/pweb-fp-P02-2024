@@ -16,7 +16,7 @@ export default {
         <div class="sidebar" :style="{ width: sidebarWidth }">
 
         <SidebarLink to="/admin" icon="pi pi-home">Barang</SidebarLink>
-        <SidebarLink to="/People" icon="pi pi-users">Petugas</SidebarLink>
+        <SidebarLink to="/admin/all-operator" icon="pi pi-users">Petugas</SidebarLink>
         <SidebarLink to="/Summary" icon="pi pi-user">Profile</SidebarLink>
 
         <span

@@ -14,7 +14,6 @@ export default {
 
 <template>
   <div>
-    
     <div>
       <NavBar />
       <Sidebar />
