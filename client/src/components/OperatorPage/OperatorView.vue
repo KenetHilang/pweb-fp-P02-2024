@@ -5,27 +5,25 @@ import axios from 'axios';
 export default {
   name: 'OperatorView',
   setup() {
-    const operators = ref([]); // Reactive variable for operators
-    const error = ref(''); // Error message
-    const loading = ref(true); // Loading state
+    const operators = ref([]); 
+    const error = ref(''); 
+    const loading = ref(true); 
 
-    // Function to fetch data from the API
     const fetchData = async () => {
       try {
         const result = await axios.get('http://localhost:4000/operator');
         if (result.data && result.data.data) {
-          operators.value = result.data.data; // Assign data to operators
+          operators.value = result.data.data;
         } else {
           error.value = 'Data not in expected format.';
         }
       } catch (err) {
         error.value = 'Error fetching data. Please try again later.';
       } finally {
-        loading.value = false; // Stop loading
+        loading.value = false; 
       }
     };
 
-    // Fetch data when the component is mounted
     onMounted(() => {
       fetchData();
     });
@@ -106,7 +104,7 @@ export default {
 
         <div class="flex flex-col items-center pb-10">
           <img
-            class="w-48 h-48 object-cover mb-3 rounded-full shadow-lg"
+            class="sm:w-48 sm:h-48 object-cover mb-3 rounded-full shadow-lg w-36 h-36"
             :src="operator.image || 'https://via.placeholder.com/150'"
             :alt="operator.name"
           />
@@ -140,8 +138,9 @@ export default {
 </template>
 
 <style>
-/* Adjust gaps between cards */
+
 .grid {
-  row-gap: 1.5rem; /* Adjust row gap */
+  row-gap: 1.5rem; 
 }
+
 </style>
