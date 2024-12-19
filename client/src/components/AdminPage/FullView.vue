@@ -87,7 +87,7 @@ export default {
 </script>
 
 <template>
-    <div class="md:columns-2 columns-1 gap-4">
+    <div class="md:columns-2 columns-1 gap-4 mt-6">
         <div
             v-for="item in Items"
             :key="item._id"
