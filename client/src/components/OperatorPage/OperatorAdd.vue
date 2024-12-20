@@ -96,10 +96,11 @@ export default {
     data() {
         return {
             form: {
-                pic: '',
+                image: '',
                 name: '',
-                amount: null,
-                condition: '',
+                age: null,
+                NoTelp: '',
+                Email: '',
             },
         };
     },
@@ -125,6 +126,9 @@ export default {
                     if (this.onClose) {
                         this.onClose();
                     }
+
+                    // Refresh the page
+                    window.location.reload();
                 })
                 .catch(error => {
                     console.error('Error submitting form:', error);

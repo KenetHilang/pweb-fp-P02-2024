@@ -1,6 +1,7 @@
 <script>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { useRouter } from 'vue-router';
 
 export default {
     name: 'OperatorView',
@@ -8,8 +9,10 @@ export default {
         const operators = ref([]); 
         const error = ref(''); 
         const loading = ref(true); 
+        const router = useRouter();
 
         const fetchData = async () => {
+            loading.value = true;
             try {
                 const result = await axios.get('http://localhost:4000/operator');
                 if (result.data && result.data.data) {
@@ -24,16 +27,30 @@ export default {
             }
         };
 
+        const deleteOperator = async (id) => {
+            try {
+                await axios.delete(`http://localhost:4000/operator/${id}`);
+                operators.value = operators.value.filter(operator => operator._id !== id);
+                fetchData();
+            } catch (err) {
+                error.value = 'Error deleting operator. Please try again later.';
+            }
+        };
+
+        const navigateToEditPage = (id) => {
+            router.push(`/admin/edit-operator/${id}`);
+        };
+
         onMounted(() => {
             fetchData();
-            const interval = setInterval(fetchData, 3000);
-            onUnmounted(() => clearInterval(interval));
         });
 
         return {
             operators,
             error,
             loading,
+            deleteOperator,
+            navigateToEditPage,
         };
     },
 };
@@ -83,28 +100,8 @@ export default {
                 :key="operator._id"
                 class="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col h-full"
             >
-                <div class="flex justify-end px-4 pt-4">
-                    <button
-                        id="dropdownButton"
-                        class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
-                        type="button"
-                    >
-                        <span class="sr-only">Open dropdown</span>
-                        <svg
-                            class="w-5 h-5"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="currentColor"
-                            viewBox="0 0 16 3"
-                        >
-                            <path
-                                d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
-                            />
-                        </svg>
-                    </button>
-                </div>
 
-                <div class="flex flex-col items-center pb-10">
+                <div class="flex flex-col items-center pb-10 mt-6">
                     <img
                         class="sm:w-48 sm:h-48 object-cover mb-3 rounded-full shadow-lg w-36 h-36"
                         :src="operator.image || 'https://via.placeholder.com/150'"
@@ -116,23 +113,29 @@ export default {
                     <span class="text-sm text-gray-500 dark:text-gray-400">
                         {{ operator.Email }}
                     </span>
+
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                        {{ operator.NoTelp }}
+                    </p>
                     <div class="flex mt-4 md:mt-6">
                         <a
                             href="#"
+                            @click.prevent="navigateToEditPage(operator._id)"
                             class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            >Add friend</a
+                            >Edit</a
                         >
                         <a
                             href="#"
-                            class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                            >Message</a
+                            @click.prevent="deleteOperator(operator._id)"
+                            class="py-2 px-4 ms-2 text-sm font-medium text-white focus:outline-none bg-red-600 rounded-lg border border-red-700 hover:bg-red-700 hover:text-white focus:z-10 focus:ring-4 focus:ring-red-200"
+                            >Remove</a
                         >
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Empty state -->
+        <!-- kalo gagal -->
         <p v-if="!loading && !operators.length" class="text-gray-500 text-center">
             No operators available.
         </p>
