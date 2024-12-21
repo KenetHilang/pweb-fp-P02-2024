@@ -17,17 +17,20 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: LoginPage,
+      meta: { requiresLayout: false }, // Tidak butuh layout
     },
     {
       path: '/admin',
       name: 'admin',
       component: AdminPage,
+      meta: { requiresLayout: true }, // Butuh layout
     },
     {
       path: '/admin/edit-item/:id',
       name: 'edit-item',
       component: EditItem,
       props: true,
+      meta: { requiresLayout: true }, // Butuh layout
     },
     {
       path: '/admin/all-operator',
