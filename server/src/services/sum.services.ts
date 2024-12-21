@@ -7,6 +7,10 @@ class BorrowServices {
         return await Borrowed.find();
     }
 
+    async ShowOne(borrowId: string) {
+        return await Borrowed.findById(borrowId);
+    }
+
     async BorrowItem(borrowData: Partial<BorrowInter>, itemId: string) {
         // Find the item in the Items collection
         const item = await Items.findById(itemId);

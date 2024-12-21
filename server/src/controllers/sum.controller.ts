@@ -26,6 +26,31 @@ export class BorrowController {
         }
     }
 
+    public async ShowOne(req: Request, res: Response) {
+        try {
+            const borrowId = req.params.id;
+            const borrowServices = new BorrowServices();
+            const borrowed = await borrowServices.ShowOne(borrowId);
+            res.status(200).json({
+                data: borrowed
+            });
+        } catch (error) {
+            if (error instanceof Error) {
+                res.status(400).json({
+                    status: "failed",
+                    message: error.message,
+                    data: {}
+                });
+            } else {
+                res.status(500).json({
+                    status: "failed",
+                    message: "Internal server error while fetching borrowed item",
+                    data: {}
+                });
+            }
+        }
+    }
+
     public async BorrowItem(req: Request, res: Response) {
         try {
             const borrowData = req.body;
