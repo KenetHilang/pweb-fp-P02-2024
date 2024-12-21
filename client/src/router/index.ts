@@ -3,7 +3,7 @@ import LoginPage from '@/views/LoginPage.vue'
 import AdminPage from '@/views/AdminPage.vue'
 import EditItem from '@/components/AdminPage/EditItem.vue'
 import OperatorPage from '@/views/OperatorPage.vue'
-import SummaryPage from '@/views/SummaryPage.vue'  // You'll need to create this component
+import SummaryPage from '@/views/SummaryPage.vue'
 import OperatorEdit from '@/components/OperatorPage/OperatorEdit.vue'
 import BorrowForm from '@/components/OperatorPage/BorrowForm.vue'
 import DisplayBorrowed from '@/components/OperatorPage/DisplayBorrowed.vue'
