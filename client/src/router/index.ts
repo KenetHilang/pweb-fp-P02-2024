@@ -3,9 +3,11 @@ import LoginPage from '@/views/LoginPage.vue'
 import AdminPage from '@/views/AdminPage.vue'
 import EditItem from '@/components/AdminPage/EditItem.vue'
 import OperatorPage from '@/views/OperatorPage.vue'
-import SummaryPage from '@/views/SummaryPage.vue'  // You'll need to create this component
-import BorrowForm from '@/components/OperatorPage/BorrowForm.vue'
+import SummaryPage from '@/views/SummaryPage.vue'
 import OperatorEdit from '@/components/OperatorPage/OperatorEdit.vue'
+import BorrowForm from '@/components/OperatorPage/BorrowForm.vue'
+import DisplayBorrowed from '@/components/OperatorPage/DisplayBorrowed.vue'
+import DisplayEquipment from '@/components/OperatorPage/DisplayEquipment.vue'
 
 
 const router = createRouter({
@@ -33,6 +35,12 @@ const router = createRouter({
       component: OperatorPage,
     },
     {
+      path: '/admin/edit-operator/:id',
+      name: 'edit-operator',
+      component: OperatorEdit,
+      props: true,
+    },
+    {
       path: '/operator',
       name: 'operator',
       component: OperatorPage // ganti jadi home page nya operator
@@ -43,9 +51,19 @@ const router = createRouter({
       component: BorrowForm
     },
     {
-      path: '/summary',
+      path: '/admin/summary',
       name: 'summary',
       component: SummaryPage
+    },
+    {
+      path: '/operator/borrowed-items',
+      name: 'borrowed-items',
+      component: DisplayBorrowed
+    },
+    {
+      path: '/operator/all-equipment',
+      name: 'all-equipment',
+      component: DisplayEquipment 
     }
   ],
 })
