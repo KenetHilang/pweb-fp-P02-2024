@@ -156,6 +156,31 @@ class OperatorController {
             }
         }
     }
+
+    public async GetAllItems(req: Request, res: Response) {
+        try {
+            const items = await OperatorServices.GetAllItems();
+            res.status(200).json({
+                status: "success",
+                message: "Equipment items retrieved successfully",
+                data: items
+            });
+        } catch (error) {
+            if (error instanceof Error) {
+                res.status(400).json({
+                    status: "failed",
+                    message: error.message,
+                    data: []
+                });
+            } else {
+                res.status(500).json({
+                    status: "failed",
+                    message: "Internal server error while fetching equipment items",
+                    data: []
+                });
+            }
+        }
+    }
 }
 
 export default new OperatorController();

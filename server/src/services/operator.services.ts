@@ -1,4 +1,5 @@
 import { Operator, Booking, OperatorInter, BookingInter } from "../models/operator.models";
+import Items from "../models/admin.models";
 
 class OperatorServices {
   async ShowAll() {
@@ -73,6 +74,18 @@ class OperatorServices {
         throw error;
       }
       throw new Error("Failed to fetch equipment bookings");
+    }
+  }
+
+  async GetAllItems() {
+    try {
+      const items = await Items.find().sort({ created_at: -1 });
+      return items;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error("Failed to fetch equipment items");
     }
   }
 }

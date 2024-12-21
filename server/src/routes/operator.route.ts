@@ -9,7 +9,7 @@ router.delete("/:id", OperatorController.DeleteOperator);
 
 // nomor 3 (azza)
 router.post("/book-equipment", OperatorController.BookEquipment);
-
-router.get("/all-equipment", OperatorController.GetAllEquipment);
+router.get("/all-equipment", OperatorController.GetAllItems);
+router.get("/all-equipment/borrows", OperatorController.GetAllEquipment);
 
 export default router;
