@@ -56,83 +56,84 @@
   import { useRouter } from 'vue-router';
   
   export default {
-  data() {
-    return {
-      isLoginActive: true,
-      isMenuResponsive: false,
-      username: '',
-      password: '',
-      role: '',
-    };
-  },
-  methods: {
-    async login() {
-      if (!this.username || !this.password) {
-        alert('Username and Password cannot be empty.');
-        return;
-      }
-      if (!this.role) {
-        alert('Please select a role.');
-        return;
-      }
-
-      try {
-        const response = await fetch('http://localhost:4000/auth/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            username: this.username,
-            password: this.password,
-          }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          if (data.user.role !== this.role) {
-            alert('Username and role do not match.');
-            return;
-          }
-
-          // Simpan token dan arahkan ke halaman berdasarkan role
-          localStorage.setItem('token', data.token);
-          localStorage.setItem('role', data.user.role);
-          alert('Login successful!');
-          if (data.user.role === 'admin') {
-            this.$router.push({ name: 'admin' });
-          } else if (data.user.role === 'operator') {
-            this.$router.push({ name: 'operator' });
-          }
-        } else {
-          // Tambahkan pengecekan jika username/password tidak terdaftar
-          if (data.message === 'User not found') {
-            alert('Username not registered. Please sign up.');
-          } else if (data.message === 'Invalid password') {
-            alert('Incorrect password. Please try again.');
-          } else {
-            alert(data.message || 'Login failed.');
-          }
+    name: 'LoginPage',
+    data() {
+      return {
+        isLoginActive: true,
+        isMenuResponsive: false,
+        username: '',
+        password: '',
+        role: '',
+      };
+    },
+    methods: {
+      async login() {
+        if (!this.username || !this.password) {
+          alert('Username and Password cannot be empty.');
+          return;
         }
-      } catch (error) {
-        console.error('Login error:', error);
-        alert('Network error. Please check your connection.');
-      }
+        if (!this.role) {
+          alert('Please select a role.');
+          return;
+        }
+  
+        try {
+          const response = await fetch('http://localhost:4000/auth/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              username: this.username,
+              password: this.password,
+            }),
+          });
+  
+          const data = await response.json();
+  
+          if (response.ok) {
+            if (data.user.role !== this.role) {
+              alert('Username and role do not match.');
+              return;
+            }
+  
+            // Simpan token dan arahkan ke halaman berdasarkan role
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('role', data.user.role);
+            alert('Login successful!');
+            this.$emit('login'); // Emit the 'login' event to the parent
+            if (data.user.role === 'admin') {
+              this.$router.push({ name: 'admin' });
+            } else if (data.user.role === 'operator') {
+              this.$router.push({ name: 'operator' });
+            }
+          } else {
+            if (data.message === 'User not found') {
+              alert('Username not registered. Please sign up.');
+            } else if (data.message === 'Invalid password') {
+              alert('Incorrect password. Please try again.');
+            } else {
+              alert(data.message || 'Login failed.');
+            }
+          }
+        } catch (error) {
+          console.error('Login error:', error);
+          alert('Network error. Please check your connection.');
+        }
+      },
+      showLogin() {
+        this.isLoginActive = true;
+      },
+      showRegister() {
+        this.isLoginActive = false;
+      },
+      toggleMenu() {
+        this.isMenuResponsive = !this.isMenuResponsive;
+      },
     },
-    showLogin() {
-      this.isLoginActive = true;
-    },
-    showRegister() {
-      this.isLoginActive = false;
-    },
-    toggleMenu() {
-      this.isMenuResponsive = !this.isMenuResponsive;
-    },
-  },
-};
-
+  };
   </script>
+  
   
   <style scoped>
   /* POPPINS FONT */

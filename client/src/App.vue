@@ -1,53 +1,45 @@
 <script>
+import { ref } from 'vue';
 import Sidebar from '@/components/SideBar/Sidebar.vue';
 import NavBar from '@/components/NavBar/NavBar.vue';
-import { ref } from 'vue';
+import { sidebarWidth } from '@/components/SideBar/state'; // Ensure you import sidebarWidth
+import LoginPage from './views/LoginPage.vue';
 
 export default {
-  components: { Sidebar, NavBar },
+  components: { Sidebar, NavBar, LoginPage },
   setup() {
     const isSidebarVisible = ref(true);
-    const sidebarWidth = ref('250px'); // Tambahkan definisi sidebarWidth
+    const isLoggedIn = ref(false); // Track login status
 
     const toggleSidebar = () => {
       isSidebarVisible.value = !isSidebarVisible.value;
     };
 
-    return { sidebarWidth, isSidebarVisible, toggleSidebar };
-  },
+    // Method to update login status
+    const updateLoginStatus = () => {
+      isLoggedIn.value = true;
+    };
+
+    return { sidebarWidth, isSidebarVisible, toggleSidebar, isLoggedIn, updateLoginStatus };
+  }
 };
 </script>
 
 <template>
-  <div class="min-h-screen w-full bg-gray-50">
-    <NavBar :toggleSidebar="toggleSidebar" />
-
-    <div class="flex min-h-[calc(100vh-48px)] mt-12">
-      <Sidebar
-        v-show="isSidebarVisible"
-        class="fixed h-[calc(100vh-48px)] bg-white shadow-md z-10"
-      />
-
-      <div
-        :style="{ marginLeft: isSidebarVisible ? sidebarWidth : '0' }"
-        class="flex-1 p-4 transition-all duration-300 ease-in-out"
-      >
+  <div>
+    <!-- Content visible only if the user is logged in -->
+    <div v-if="isLoggedIn">
+      <NavBar :toggleSidebar="toggleSidebar" />
+      <Sidebar v-show="isSidebarVisible" class="sidebar" />
+      <div :style="{ marginLeft: isSidebarVisible ? sidebarWidth : '0' }" class="content p-2 mt-12">
+        <!-- Render route content here -->
         <router-view />
       </div>
     </div>
+
+    <!-- Login link if not logged in -->
+    <div v-else>
+      <LoginPage @login="updateLoginStatus"/>
+    </div>
   </div>
 </template>
-
-<style>
-/* Hanya menyimpan scrollbar hiding jika diperlukan */
-::-webkit-scrollbar {
-  display: none;
-}
-
-@media (max-width: 425px) {
-  .sidebar {
-    display: none !important;
-  }
-}
-</style>
-
