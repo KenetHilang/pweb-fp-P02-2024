@@ -1,16 +1,16 @@
 <script>
-import Sidebar from '@/components/SideBar/Sidebar.vue';;;
+import Sidebar from '@/components/SideBar/Sidebar.vue';
 import NavBar from '@/components/NavBar/NavBar.vue';
 import { ref } from 'vue';
-import { useRoute } from 'vue-router'; // Import useRoute untuk akses rute saat ini
 
 export default {
   components: { Sidebar, NavBar },
   setup() {
-    const isSidebarVisible = ref(true); // Reactive state to control sidebar visibility
+    const isSidebarVisible = ref(true);
+    const sidebarWidth = ref('250px'); // Tambahkan definisi sidebarWidth
 
     const toggleSidebar = () => {
-      isSidebarVisible.value = !isSidebarVisible.value; // Toggle visibility state
+      isSidebarVisible.value = !isSidebarVisible.value;
     };
 
     return { sidebarWidth, isSidebarVisible, toggleSidebar };
@@ -19,47 +19,35 @@ export default {
 </script>
 
 <template>
-  <div>
-    <!-- Navigation Bar -->
+  <div class="min-h-screen w-full bg-gray-50">
     <NavBar :toggleSidebar="toggleSidebar" />
 
-    <!-- Sidebar -->
-    <Sidebar
-      v-show="isSidebarVisible"
-      class="sidebar"
-    />
+    <div class="flex min-h-[calc(100vh-48px)] mt-12">
+      <Sidebar
+        v-show="isSidebarVisible"
+        class="fixed h-[calc(100vh-48px)] bg-white shadow-md z-10"
+      />
 
-    <!-- Main Content -->
-    <div
-      :style="{ marginLeft: isSidebarVisible ? sidebarWidth : '0' }"
-      class="content p-2 mt-12"
-    >
-      <router-view />
+      <div
+        :style="{ marginLeft: isSidebarVisible ? sidebarWidth : '0' }"
+        class="flex-1 p-4 transition-all duration-300 ease-in-out"
+      >
+        <router-view />
+      </div>
     </div>
   </div>
 </template>
 
-
-
 <style>
-/* Hide Sidebar on Mobile */
-@media (max-width: 425px) {
-  .sidebar {
-    display: none !important; /* Ensure it's completely hidden */
-  }
-
-  .content {
-    margin-left: 0 !important; /* Adjust content margin */
-  }
-}
-
-/* Default View */
-.view {
-  margin-top: 3.5rem;
-}
-
+/* Hanya menyimpan scrollbar hiding jika diperlukan */
 ::-webkit-scrollbar {
   display: none;
+}
+
+@media (max-width: 425px) {
+  .sidebar {
+    display: none !important;
+  }
 }
 </style>
 
