@@ -6,6 +6,10 @@ class ItemServices {
     return await Items.find();
   }
 
+  async ShowOne(id: string) {
+    return await Items.findById(id);
+  }
+
   async AddItem(itemData: Partial<ItemInter>) {
     const item = new Items(itemData);
     return await item.save();
