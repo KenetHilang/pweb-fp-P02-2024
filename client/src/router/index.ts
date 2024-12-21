@@ -8,6 +8,8 @@ import BorrowForm from '@/components/OperatorPage/BorrowForm.vue'
 import OperatorEdit from '@/components/OperatorPage/OperatorEdit.vue'
 import SummaryPage from '@/views/SummaryPage.vue'  // You'll need to create this component
 import BorrowForm from '@/components/OperatorPage/BorrowForm.vue'
+import DisplayBorrowed from '@/components/OperatorPage/DisplayBorrowed.vue'
+import DisplayEquipment from '@/components/OperatorPage/DisplayEquipment.vue'
 
 
 const router = createRouter({
@@ -54,6 +56,16 @@ const router = createRouter({
       path: '/admin/summary',
       name: 'summary',
       component: SummaryPage
+    },
+    {
+      path: '/operator/borrowed-items',
+      name: 'borrowed-items',
+      component: DisplayBorrowed
+    },
+    {
+      path: '/operator/all-equipment',
+      name: 'all-equipment',
+      component: DisplayEquipment 
     }
   ],
 })
