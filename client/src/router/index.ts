@@ -67,7 +67,6 @@ const router = createRouter({
       path: '/operator/all-equipment',
       name: 'all-equipment',
       component: DisplayEquipment 
-      meta: { requiresLayout: true }, // Butuh layout
     }
   ],
 })
