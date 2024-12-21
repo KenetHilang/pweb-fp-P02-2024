@@ -1,34 +1,59 @@
 <script>
-import Sidebar from '@/components/SideBar/Sidebar.vue';
+import Sidebar from '@/components/SideBar/Sidebar.vue';;;
 import NavBar from '@/components/NavBar/NavBar.vue';
-import { sidebarWidth } from '@/components/SideBar/state';
+import { ref } from 'vue';
 import { useRoute } from 'vue-router'; // Import useRoute untuk akses rute saat ini
 
 export default {
   components: { Sidebar, NavBar },
   setup() {
-    const route = useRoute(); // Dapatkan informasi rute aktif
-    return { route, sidebarWidth };
+    const isSidebarVisible = ref(true); // Reactive state to control sidebar visibility
+
+    const toggleSidebar = () => {
+      isSidebarVisible.value = !isSidebarVisible.value; // Toggle visibility state
+    };
+
+    return { sidebarWidth, isSidebarVisible, toggleSidebar };
   },
 };
 </script>
 
 <template>
   <div>
-    <!-- Tampilkan Sidebar dan NavBar hanya jika rute membutuhkan layout -->
-    <div v-if="route.meta.requiresLayout">
-      <NavBar />
-      <Sidebar />
-    </div>
+    <!-- Navigation Bar -->
+    <NavBar :toggleSidebar="toggleSidebar" />
 
-    <!-- Router View untuk konten halaman -->
-    <div :style="{ 'margin-left': route.meta.requiresLayout ? sidebarWidth : '0' }" class="p-2 mt-12">
+    <!-- Sidebar -->
+    <Sidebar
+      v-show="isSidebarVisible"
+      class="sidebar"
+    />
+
+    <!-- Main Content -->
+    <div
+      :style="{ marginLeft: isSidebarVisible ? sidebarWidth : '0' }"
+      class="content p-2 mt-12"
+    >
       <router-view />
     </div>
   </div>
 </template>
 
+
+
 <style>
+/* Hide Sidebar on Mobile */
+@media (max-width: 425px) {
+  .sidebar {
+    display: none !important; /* Ensure it's completely hidden */
+  }
+
+  .content {
+    margin-left: 0 !important; /* Adjust content margin */
+  }
+}
+
+/* Default View */
 .view {
   margin-top: 3.5rem;
 }
@@ -37,3 +62,4 @@ export default {
   display: none;
 }
 </style>
+

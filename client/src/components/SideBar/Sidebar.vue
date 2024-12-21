@@ -15,9 +15,9 @@ export default {
 <template>
         <div class="sidebar" :style="{ width: sidebarWidth }">
 
-        <SidebarLink to="/admin" icon="pi pi-home">Barang</SidebarLink>
-        <SidebarLink to="/admin/all-operator" icon="pi pi-users">Petugas</SidebarLink>
-        <SidebarLink to="/Summary" icon="pi pi-user">Profile</SidebarLink>
+        <SidebarLink to="/admin" icon="pi pi-home">Items</SidebarLink>
+        <SidebarLink to="/admin/all-operator" icon="pi pi-users">Operators</SidebarLink>
+        <SidebarLink to="/admin/summary" icon="pi pi-list-check">Summary</SidebarLink>
 
         <span
         class="collapse-icon"

@@ -4,6 +4,7 @@ import cors from "cors";
 import adminRouter from "./routes/admin.route";
 import operatorRouter from "./routes/operator.route";
 import authRouter from "./routes/authRoute"; // Tambahkan auth router
+import borrowRouter from "./routes/sum.route";
 
 const app = express();
 const PORT = 4000;
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 app.use("/admin", adminRouter);
 app.use("/operator", operatorRouter);
 app.use("/auth", authRouter); // Gunakan rute autentikasi
+app.use("/borrow", borrowRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
