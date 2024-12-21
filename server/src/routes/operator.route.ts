@@ -7,4 +7,9 @@ router.post("/", OperatorController.AddOperator);
 router.put("/:id", OperatorController.UpdateOperator);
 router.delete("/:id", OperatorController.DeleteOperator);
 
+// nomor 3 (azza)
+router.post("/book-equipment", OperatorController.BookEquipment);
+
+router.get("/all-equipment", OperatorController.GetAllEquipment);
+
 export default router;

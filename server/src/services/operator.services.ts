@@ -1,5 +1,4 @@
-import Operator from "../models/operator.models";
-import { OperatorInter } from "../models/operator.models";
+import { Operator, Booking, OperatorInter, BookingInter } from "../models/operator.models";
 
 class OperatorServices {
   async ShowAll() {
@@ -41,6 +40,39 @@ class OperatorServices {
         throw error;
       }
       throw new Error("Failed to delete operator");
+    }
+  }
+
+  async BookEquipment(bookingData: BookingInter) {
+    try {
+      const booking = new Booking({
+        ...bookingData,
+        borrow_date: new Date() // Set borrow date to current date
+      });
+      
+      const savedBooking = await booking.save();
+      if (!savedBooking) {
+        throw new Error("Failed to create booking");
+      }
+      
+      return savedBooking;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error("Failed to process equipment booking");
+    }
+  }
+
+  async GetAllEquipment() {
+    try {
+      const bookings = await Booking.find().sort({ borrow_date: -1 }); // Sort by newest first
+      return bookings;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error("Failed to fetch equipment bookings");
     }
   }
 }

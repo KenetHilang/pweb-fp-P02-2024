@@ -105,6 +105,57 @@ class OperatorController {
             }
         }
     }
+
+    public async BookEquipment(req: Request, res: Response) {
+        try {
+            const bookingData = req.body;
+            const booking = await OperatorServices.BookEquipment(bookingData);
+            res.status(200).json({
+                status: "success",
+                message: "Equipment booked successfully",
+                data: booking
+            });
+        } catch (error) {
+            if (error instanceof Error) {
+                res.status(400).json({
+                    status: "failed",
+                    message: error.message,
+                    data: {}
+                });
+            } else {
+                res.status(500).json({
+                    status: "failed",
+                    message: "Internal server error while booking equipment",
+                    data: {}
+                });
+            }
+        }
+    }
+
+    public async GetAllEquipment(req: Request, res: Response) {
+        try {
+            const bookings = await OperatorServices.GetAllEquipment();
+            res.status(200).json({
+                status: "success",
+                message: "Equipment bookings retrieved successfully",
+                data: bookings
+            });
+        } catch (error) {
+            if (error instanceof Error) {
+                res.status(400).json({
+                    status: "failed",
+                    message: error.message,
+                    data: []
+                });
+            } else {
+                res.status(500).json({
+                    status: "failed",
+                    message: "Internal server error while fetching equipment bookings",
+                    data: []
+                });
+            }
+        }
+    }
 }
 
 export default new OperatorController();
