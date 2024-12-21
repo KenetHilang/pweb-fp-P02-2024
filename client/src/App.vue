@@ -1,8 +1,8 @@
 <script>
-import Sidebar from '@/components/SideBar/Sidebar.vue';
-import { sidebarWidth } from '@/components/SideBar/state';
+import Sidebar from '@/components/SideBar/Sidebar.vue';;;
 import NavBar from '@/components/NavBar/NavBar.vue';
 import { ref } from 'vue';
+import { useRoute } from 'vue-router'; // Import useRoute untuk akses rute saat ini
 
 export default {
   components: { Sidebar, NavBar },
