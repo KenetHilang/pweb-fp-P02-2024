@@ -10,6 +10,7 @@ import DisplayBorrowed from '@/components/Operator/DisplayBorrowed.vue';
 import DisplayEquipment from '@/components/Operator/DisplayEquipment.vue';
 import Rules from '@/views/Rules.vue';
 import HomePageOperator from '@/views/HomePageOperator.vue';
+import OperatorPage from '@/views/OperatorPage.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
