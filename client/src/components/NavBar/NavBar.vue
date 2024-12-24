@@ -15,10 +15,10 @@
       <div class="flex items-center space-x-6">
         <!-- Aturan Peminjaman -->
         <router-link
-          :to="isOnRulesPage ? '/' : '/rules'"
+          :to="rulesNavigationTarget"
           class="px-3 py-1 bg-blue-600 rounded-lg hover:bg-blue-700 transition"
         >
-          {{ isOnRulesPage ? 'Back to Home' : 'Aturan Peminjaman' }}
+          {{ isOnRulesPage ? (isGuest ? 'Back to Home' : 'Back to Dashboard') : 'Aturan Peminjaman' }}
         </router-link>
 
         <!-- User Profile -->
@@ -62,6 +62,15 @@ export default defineComponent({
     // Tentukan apakah rute saat ini adalah rules
     const isOnRulesPage = computed(() => route.path === '/rules');
 
+    // Tentukan target navigasi tombol di halaman Rules
+    const rulesNavigationTarget = computed(() => {
+      if (isOnRulesPage.value) {
+        if (role.value === 'admin') return '/admin';
+        if (role.value === 'operator') return '/operator';
+      }
+      return '/rules';
+    });
+
     // Ambil data pengguna dari localStorage
     const updateProfile = () => {
       username.value = localStorage.getItem('username') || 'Guest';
@@ -90,6 +99,7 @@ export default defineComponent({
       username,
       role,
       isOnRulesPage,
+      rulesNavigationTarget,
       logout,
     };
   },
@@ -111,5 +121,11 @@ nav a:hover {
 
 img {
   object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  nav .container {
+    flex-wrap: wrap;
+  }
 }
 </style>
