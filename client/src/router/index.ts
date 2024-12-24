@@ -10,7 +10,6 @@ import DisplayBorrowed from '@/components/Operator/DisplayBorrowed.vue';
 import DisplayEquipment from '@/components/Operator/DisplayEquipment.vue';
 import Rules from '@/views/Rules.vue'; // Pastikan path sesuai lokasi file
 import HomePageOperator from '@/views/HomePageOperator.vue';
-import OperatorPage from '@/views/OperatorPage.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -52,6 +51,7 @@ const router = createRouter({
       name: 'edit-operator',
       component: OperatorEdit,
       props: true,
+      meta: { requiresAuth: true, requiresAdmin: true },
     },
     {
       path: '/HomePageOperator',
