@@ -1,6 +1,6 @@
 <script>
-import OperatorView from '@/components/OperatorPage/OperatorView.vue';
-import OperatorAdd from '@/components/OperatorPage/OperatorAdd.vue';
+import OperatorView from '@/components/Operator/OperatorView.vue';
+import OperatorAdd from '@/components/Operator/OperatorAdd.vue';
 
     export default {
         name: 'OperatorPage',
