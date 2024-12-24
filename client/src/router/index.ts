@@ -51,6 +51,7 @@ const router = createRouter({
       name: 'edit-operator',
       component: OperatorEdit,
       props: true,
+      meta: { requiresAuth: true, requiresAdmin: true },
     },
     {
       path: '/HomePageOperator',

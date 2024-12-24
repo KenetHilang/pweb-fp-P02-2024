@@ -18,8 +18,9 @@ app.get("/", (req, res) => {
   res.send("Hi Ges");
 });
 
-app.use("/admin", authenticateToken, authorizeRole(['admin']), adminRouter);
-app.use("/operator", authenticateToken, authorizeRole(['operator', 'admin']), operatorRouter);
+// Modified routes to allow both roles to access
+app.use("/admin", authenticateToken, adminRouter);
+app.use("/operator", authenticateToken, operatorRouter);
 app.use("/auth", authRouter);
 app.use("/borrow", borrowRouter);
 
