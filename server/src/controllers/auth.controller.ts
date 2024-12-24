@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { AuthService } from '../services/auth.services';
+import { createToken } from '../services/token.services'; // Impor fungsi createToken
 
 const authService = new AuthService();
 
@@ -43,6 +44,13 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
 
     // Login pengguna
     const { user, token } = await authService.login(username, password);
+    // Buat token JWT dengan masa berlaku 30 menit
+    const tokenWithExpiry = createToken({
+      id: String(user._id),
+      username: user.username,
+      role: user.role
+    });
+
     return res.status(200).json({
       message: "Login successful",
       user: {
@@ -51,7 +59,7 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
         email: user.email,
         role: user.role,
       },
-      token,
+      token: tokenWithExpiry,
     });
   } catch (error) {
     if (error instanceof Error) {
