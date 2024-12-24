@@ -1,5 +1,5 @@
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 
 export default {
@@ -45,6 +45,45 @@ export default {
             return !item.is_returned;
         };
 
+        const sortField = ref('item_name');
+        const sortDirection = ref('asc');
+
+        const toggleSort = (field) => {
+            if (sortField.value === field) {
+                sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortField.value = field;
+                sortDirection.value = 'asc';
+            }
+        };
+
+        const sortedBorrowedItems = computed(() => {
+            return [...borrowedItems.value].sort((a, b) => {
+                let compareResult = 0;
+                switch (sortField.value) {
+                    case 'item_name':
+                        compareResult = a.item_name.localeCompare(b.item_name);
+                        break;
+                    case 'amount':
+                        compareResult = parseInt(a.amount) - parseInt(b.amount);
+                        break;
+                    case 'borrower_name':
+                        compareResult = a.borrower_name.localeCompare(b.borrower_name);
+                        break;
+                    case 'officer_name':
+                        compareResult = a.officer_name.localeCompare(b.officer_name);
+                        break;
+                    case 'borrow_date':
+                        compareResult = new Date(a.borrow_date) - new Date(b.borrow_date);
+                        break;
+                    case 'return_date':
+                        compareResult = new Date(a.return_date) - new Date(b.return_date);
+                        break;
+                }
+                return sortDirection.value === 'asc' ? compareResult : -compareResult;
+            });
+        });
+
         onMounted(() => {
             fetchBorrowedItems();
         });
@@ -54,7 +93,11 @@ export default {
             error,
             loading,
             returnItem,
-            canBeReturned
+            canBeReturned,
+            sortField,
+            sortDirection,
+            toggleSort,
+            sortedBorrowedItems
         };
     }
 };
@@ -79,23 +122,22 @@ export default {
             <table class="min-w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
                 <thead class="bg-gray-100 dark:bg-gray-700">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Item Name
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Amount
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Borrower
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Officer
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Borrow Date
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Return Date
+                        <th v-for="(label, field) in {
+                            'item_name': 'Item Name',
+                            'amount': 'Amount',
+                            'borrower_name': 'Borrower',
+                            'officer_name': 'Officer',
+                            'borrow_date': 'Borrow Date',
+                            'return_date': 'Return Date'
+                        }" 
+                            :key="field"
+                            @click="toggleSort(field)"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-200 hover:text-gray-900 transition-colors duration-200"
+                        >
+                            {{ label }}
+                            <span v-if="sortField === field" class="ml-1">
+                                {{ sortDirection === 'asc' ? '↑' : '↓' }}
+                            </span>
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                             Actions
@@ -103,23 +145,20 @@ export default {
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-gray-600">
-                    <tr v-for="item in borrowedItems" :key="item._id" class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                            {{ item.item_name }}
+                    <tr v-for="item in sortedBorrowedItems" 
+                        :key="item._id" 
+                        class="hover:bg-gray-50 dark:hover:bg-gray-700 group"
+                    >
+                        <td v-for="field in ['item_name', 'amount', 'borrower_name', 'officer_name']" 
+                            :key="field"
+                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200"
+                        >
+                            {{ item[field] }}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                            {{ item.amount }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                            {{ item.borrower_name }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                            {{ item.officer_name }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
                             {{ new Date(item.borrow_date).toLocaleDateString() }}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
                             {{ new Date(item.return_date).toLocaleDateString() }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
