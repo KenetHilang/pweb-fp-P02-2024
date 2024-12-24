@@ -14,7 +14,11 @@ export default {
         const fetchData = async () => {
             loading.value = true;
             try {
-                const result = await axios.get('http://localhost:4000/operator');
+                const result = await axios.get('http://localhost:4000/operator', {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
                 if (result.data && result.data.data) {
                     operators.value = result.data.data;
                 } else {
@@ -29,7 +33,12 @@ export default {
 
         const deleteOperator = async (id) => {
             try {
-                await axios.delete(`http://localhost:4000/operator/${id}`);
+                await axios.delete(`http://localhost:4000/operator/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
+                alert('Operator deleted successfully!');
                 operators.value = operators.value.filter(operator => operator._id !== id);
                 fetchData();
             } catch (err) {
@@ -38,7 +47,7 @@ export default {
         };
 
         const navigateToEditPage = (id) => {
-            router.push(`/admin/edit-operator/${id}`);
+            router.push(`/admin/editoperator/${id}`);
         };
 
         onMounted(() => {

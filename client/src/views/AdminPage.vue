@@ -33,7 +33,7 @@ export default {
         </div>
 
         <!-- Open Form Button -->
-        <button class="tombol" @click="toggleForm">+</button>
+        <button class="tombol hover:bg-green-700 transition-all" @click="toggleForm">+</button>
 
         <!-- AddForm Component -->
         <AddForm v-if="formActive" :onClose="closeForm" />
@@ -52,5 +52,6 @@ export default {
     color: white;
     text-align: center;
     font-size: 30px;
+    z-index: 1000;
 }
 </style>

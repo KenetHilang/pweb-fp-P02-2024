@@ -22,7 +22,11 @@ export default {
 
         const fetchOperator = async () => {
             try {
-                const result = await axios.get(`http://localhost:4000/operator/${props.id}`);
+                const result = await axios.get(`http://localhost:4000/operator/${props.id}`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
                 operator.value = result.data;
 
                 // Ensure the form matches the fetched operator data
@@ -42,7 +46,11 @@ export default {
             const updatedOperator = { ...form.value }; // Updated to use the same format
 
             try {
-                await axios.patch(`http://localhost:4000/operator/${props.id}`, updatedOperator);
+                await axios.patch(`http://localhost:4000/operator/${props.id}`, updatedOperator, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
                 alert('Operator updated successfully!');
             } catch (error) {
                 console.error('Error updating Operator:', error);

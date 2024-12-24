@@ -108,7 +108,11 @@ export default {
         submitForm() {
             console.log(this.form);
             
-            axios.post('http://localhost:4000/operator', this.form)
+            axios.post('http://localhost:4000/operator', this.form, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            })
                 .then(response => {
                     console.log('Form submitted successfully:', response.data);
                     alert('Form submitted successfully!');

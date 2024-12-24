@@ -41,7 +41,11 @@ const sortedEquipments = computed(() => {
 const fetchEquipments = async () => {
     loading.value = true;
     try {
-        const result = await axios.get('http://localhost:4000/admin/');
+        const result = await axios.get('http://localhost:4000/admin/', {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        });
         if (result.data && result.data.data) {
             equipments.value = result.data.data;
         } else {

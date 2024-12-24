@@ -53,7 +53,7 @@
         <!-- Right Image -->
         <div class="image-content mt-10 lg:mt-0 lg:ml-10 flex justify-center">
           <img 
-            src="C:\Users\Aisyah Rahmasari\pweb-fp-P02-2024\client\src\assets\AIKCKS.png" 
+            src="../assets/AIKCKS.png" 
             alt="Smart Band 4" 
             class="max-w-full h-auto rounded-md shadow-lg"
           />
@@ -75,7 +75,7 @@
         <div class="subject-card hover:shadow-lg transition">
           <div class="circle bg-teal-100 mx-auto">
             <img
-              src="C:\Users\Aisyah Rahmasari\pweb-fp-P02-2024\client\src\assets\iot.png"
+              src="../assets/iot.png"
               alt="Interner Of Things (IoT)"
               class="h-12 w-12"
             />
@@ -88,7 +88,7 @@
         <div class="subject-card hover:shadow-lg transition">
           <div class="circle bg-teal-100 mx-auto">
             <img
-              src="C:\Users\Aisyah Rahmasari\pweb-fp-P02-2024\client\src\assets\cyber-security.png"
+              src="../assets/cyber-security.png"
               alt="Cyber Security"
               class="h-12 w-12"
             />
@@ -101,7 +101,7 @@
         <div class="subject-card hover:shadow-lg transition">
           <div class="circle bg-teal-100 mx-auto">
             <img
-              src="C:\Users\Aisyah Rahmasari\pweb-fp-P02-2024\client\src\assets\cloud-computing_7213255.png"
+              src="../assets/cloud-computing_7213255.png"
               alt="Cloud Computing"
               class="h-12 w-12"
             />
@@ -114,7 +114,7 @@
         <div class="subject-card hover:shadow-lg transition">
           <div class="circle bg-teal-100 mx-auto">
             <img
-              src="C:\Users\Aisyah Rahmasari\pweb-fp-P02-2024\client\src\assets\machine-learning.png"
+              src="../../machine-learning.png"
               alt="Machine Learning"
               class="h-12 w-12"
             />
@@ -127,7 +127,7 @@
         <div class="subject-card hover:shadow-lg transition">
           <div class="circle bg-teal-100 mx-auto">
             <img
-              src="C:\Users\Aisyah Rahmasari\pweb-fp-P02-2024\client\src\assets\pngwing.com.png"
+              src="../../pngwing.com.png"
               alt="Embedded System"
               class="h-12 w-12"
             />
@@ -140,7 +140,7 @@
         <div class="subject-card hover:shadow-lg transition">
           <div class="circle bg-teal-100 mx-auto">
             <img
-              src="C:\Users\Aisyah Rahmasari\pweb-fp-P02-2024\client\src\assets\smart-city_3391472.png"
+              src="../assets/smart-city_3391472.png"
               alt="Engineering"
               class="h-12 w-12"
             />
@@ -162,7 +162,7 @@
         <!-- Teacher Card 1 -->
         <div class="teacher-card bg-white rounded-lg shadow-md p-8 text-center">
           <img
-            src="C:\Users\Aisyah Rahmasari\pweb-fp-P02-2024\client\src\assets\KEN.jpg"
+            src="../assets/KEN.jpg"
             alt="Teacher 1"
             class="w-full h-48 rounded-md object-cover mb-4"
           />
@@ -173,7 +173,7 @@
         <!-- Teacher Card 2 -->
         <div class="teacher-card bg-white rounded-lg shadow-md p-8 text-center">
           <img
-            src="C:\Users\Aisyah Rahmasari\pweb-fp-P02-2024\client\src\assets\AISYAH.jpg"
+            src="../assets/AISYAH.jpg"
             alt="Teacher 2"
             class="w-full h-48 rounded-md object-cover mb-4"
           />
@@ -184,7 +184,7 @@
         <!-- Teacher Card 3 -->
         <div class="teacher-card bg-white rounded-lg shadow-md p-8 text-center">
           <img
-            src="C:\Users\Aisyah Rahmasari\pweb-fp-P02-2024\client\src\assets\AZZA.jpg"
+            src="../assets/AZZA.jpg"
             alt="Teacher 3"
             class="w-full h-48 rounded-md object-cover mb-4"
           />

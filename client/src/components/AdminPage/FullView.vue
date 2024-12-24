@@ -24,7 +24,11 @@ export default {
 
         const fetchData = async () => {
             try {
-                const result = await axios.get('http://localhost:4000/admin');
+                const result = await axios.get('http://localhost:4000/admin', {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
                 if (result.data && result.data.data) {
                     Items.value = result.data.data.map((item) => {
                         if (!(item._id in loadingStates.value)) loadingStates.value[item._id] = true;
@@ -52,7 +56,11 @@ export default {
 
         const deleteItem = async (id) => {
             try {
-                await axios.delete(`http://localhost:4000/admin/${id}`);
+                await axios.delete(`http://localhost:4000/admin/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
                 Items.value = Items.value.filter((item) => item._id !== id);
                 alert('The Item Successfully Deleted');
             } catch (error) {
@@ -107,7 +115,7 @@ export default {
                 >
                     <button
                         @click="navigateToEditPage(item._id)"
-                        class="block w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
+                        class="block w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-700 hover:text-white rounded-lg transition-all delay-150"
                     >
                         Edit
                     </button>
@@ -147,7 +155,7 @@ export default {
                     </svg>
                 </div>
                 <img
-                    class="rounded-t-lg"
+                    class="rounded-t-lg w-full h-full object-cover"
                     :src="item.pic"
                     alt="Item image"
                     @load="handleImageLoaded(item._id)"
