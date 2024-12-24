@@ -4,7 +4,6 @@
             <button @click="onClose" class="close-button">X</button>
             <h1 class="mb-3 text-white text-center md:text-2xl text-xl ">New Operator Form</h1>
             <form class="max-w-md mx-auto" @submit.prevent="submitForm">
-                <!-- Image URL Input -->
                 <div class="mb-5">
                     <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image URL</label>
                     <input
@@ -16,8 +15,6 @@
                         required
                     />
                 </div>
-
-                <!-- Operator Name Input -->
                 <div class="mb-5">
                     <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Item Name</label>
                     <input
@@ -29,8 +26,6 @@
                         required
                     />
                 </div>
-
-                <!-- email Input -->
                 <div class="mb-5">
                     <label for="Email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                     <input
@@ -42,8 +37,6 @@
                         required
                     />
                 </div>
-
-                <!-- Age Input -->
                 <div class="mb-5">
                     <label for="age" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age</label>
                     <input
@@ -56,8 +49,6 @@
                         min="0"
                     />
                 </div>
-
-                <!-- NoTelp Input -->
                 <div class="mb-5">
                     <label for="NoTelp" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
                     <input
@@ -69,8 +60,6 @@
                         required
                     />
                 </div>
-
-                <!-- Submit Button -->
                 <button
                     type="submit"
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -117,7 +106,6 @@ export default {
                     console.log('Form submitted successfully:', response.data);
                     alert('Form submitted successfully!');
                     
-                    // Clear form data
                     this.form = {
                         image: '',
                         name: '',
@@ -126,12 +114,10 @@ export default {
                         Email: '',
                     };
 
-                    // Notify parent to close the form
                     if (this.onClose) {
                         this.onClose();
                     }
 
-                    // Refresh the page
                     window.location.reload();
                 })
                 .catch(error => {

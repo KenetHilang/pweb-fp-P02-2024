@@ -6,13 +6,13 @@ import html2pdf from "html2pdf.js";
 export default {
   name: "SummaryPage",
   setup() {
-    const Borrow = ref([]); // To store the borrow list
-    const error = ref(""); // To store error messages
-    const loading = ref(true); // Loading state
-    const selectedRow = ref(null); // Track the selected row
-    const invoiceData = ref({}); // Reactive object to hold invoice details
-    const sortKey = ref(""); // Key to sort by
-    const sortOrder = ref(1); // 1 for ascending, -1 for descending
+    const Borrow = ref([]);
+    const error = ref("");
+    const loading = ref(true);
+    const selectedRow = ref(null);
+    const invoiceData = ref({});
+    const sortKey = ref("");
+    const sortOrder = ref(1);
 
     const formatDate = (dateString) => {
       if (!dateString) return "Not Yet Returned";
@@ -54,13 +54,11 @@ export default {
           return;
         }
 
-        // Fetch specific borrow record by ID
         const response = await axios.get(
           `http://localhost:4000/borrow/${selectedRow.value}`
         );
         const data = response.data.data;
 
-        // Populate invoiceData with fetched data
         invoiceData.value = {
           borrower_name: data.borrower_name,
           officer_name: data.officer_name,
@@ -70,7 +68,6 @@ export default {
           amount: data.amount,
         };
 
-        // Wait for Vue to update the DOM before generating the PDF
         await nextTick();
 
         const element = document.querySelector("#invoice-template");
@@ -81,7 +78,6 @@ export default {
 
         element.style.display = "block";
 
-        // Generate PDF
         await html2pdf()
           .from(element)
           .set({
@@ -100,10 +96,10 @@ export default {
 
     const sortBy = (key) => {
       if (sortKey.value === key) {
-        sortOrder.value = -sortOrder.value; // Toggle sort order
+        sortOrder.value = -sortOrder.value;
       } else {
         sortKey.value = key;
-        sortOrder.value = 1; // Default to ascending order
+        sortOrder.value = 1;
       }
       Borrow.value.sort((a, b) => {
         if (a[key] < b[key]) return -sortOrder.value;
@@ -125,17 +121,14 @@ export default {
   <div class="mt-10">
     <h1 class="font-bold text-3xl mb-4 text-center text-white">Summary</h1>
 
-        <!-- Error Message -->
     <div v-if="error" class="text-red-500 text-center mb-4">
       {{ error }}
     </div>
 
-    <!-- Loading State -->
     <div v-if="loading" class="text-center text-lg">
       Loading data, please wait...
     </div>
 
-    <!-- Download PDF Button -->
     <div class="text-right mb-4">
       <button
         v-if="selectedRow"
@@ -187,17 +180,16 @@ export default {
       </tbody>
     </table>
 
-    <!-- Hidden Invoice Template -->
     <div id="invoice-template" ref="invoice" style="display: none;">
       <div style="display: flex; align-items: center; margin: 1rem;">
         <img src="../assets/logo.png" alt="logo" class="w-52" />
       </div>
-        <div class="text-center text-3xl font-bold">
-            Borrowing Item
-        </div>
-        <div class="text-center text-3xl font-bold mb-3">
-            Invoice
-        </div>
+      <div class="text-center text-3xl font-bold">
+        Borrowing Item
+      </div>
+      <div class="text-center text-3xl font-bold mb-3">
+        Invoice
+      </div>
       <div class="text-left text-md m-10">
         <table class="text-left ">
           <tbody>
@@ -213,31 +205,31 @@ export default {
         </table>
 
         <table class="table-auto w-full text-left border-collapse mt-8" style="border: 1px solid black;">
-            <thead style="border: 1px solid black;">
-                <tr>
-                <th class="border px-4 py-2">Item Name</th>
-                <th class="border px-4 py-2">Amount</th>
-                <th class="border px-4 py-2">Borrow Date</th>
-                <th class="border px-4 py-2">Return Date</th>
-                </tr>
-            </thead>
+          <thead style="border: 1px solid black;">
+            <tr>
+              <th class="border px-4 py-2">Item Name</th>
+              <th class="border px-4 py-2">Amount</th>
+              <th class="border px-4 py-2">Borrow Date</th>
+              <th class="border px-4 py-2">Return Date</th>
+            </tr>
+          </thead>
           <tbody style="border: 1px solid black;">
             <tr>
               <td class="border px-4 py-2">{{ invoiceData.item_name }}</td>
               <td class="border px-4 py-2">{{ invoiceData.amount }}</td>
-                <td class="border px-4 py-2">{{ invoiceData.borrow_date }}</td>
-                <td class="border px-4 py-2">{{ invoiceData.return_date }}</td>
+              <td class="border px-4 py-2">{{ invoiceData.borrow_date }}</td>
+              <td class="border px-4 py-2">{{ invoiceData.return_date }}</td>
             </tr>
           </tbody>
         </table>
-        </div>
-    
-        <div class="text-left text-md m-10">
-            <p>Thank you for using our borrowing service. Below are the details of the items you have borrowed. Please ensure to return the items by the specified return date to avoid any late fees. If you have any questions or need further assistance, feel free to contact our support team.</p>
-            <p>We hope you have a great experience with our service!</p>
-        </div>
-      
-        <div class=" text-end text-md mt-20 mr-6 mb-4">
+      </div>
+
+      <div class="text-left text-md m-10">
+        <p>Thank you for using our borrowing service. Below are the details of the items you have borrowed. Please ensure to return the items by the specified return date to avoid any late fees. If you have any questions or need further assistance, feel free to contact our support team.</p>
+        <p>We hope you have a great experience with our service!</p>
+      </div>
+
+      <div class=" text-end text-md mt-20 mr-6 mb-4">
         <p>Signature</p>
         <p>Admin</p>
         <p>Lab KCKS</p>
@@ -247,11 +239,10 @@ export default {
         </div>
         <p>(Agus Setiawan)</p>
         <p>Invoice generated on {{ new Date().toLocaleDateString() }}</p>
-        </div>
+      </div>
     </div>
   </div>
-    <!-- Explanation for clicking a row -->
-    <div class="text-center text-lg mb-4 mt-4 text-gray-300">
-        Click on a row to select it for PDF generation.
-    </div>
+  <div class="text-center text-lg mb-4 mt-4 text-gray-300">
+    Click on a row to select it for PDF generation.
+  </div>
 </template>

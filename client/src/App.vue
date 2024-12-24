@@ -1,26 +1,11 @@
 <template>
   <div class="min-h-screen flex flex-col">
-    <!-- Navbar -->
     <NavBar />
-
-    <!-- Sidebar -->
-    <Sidebar
-      v-if="isSidebarVisible"
-      class="sidebar"
-    />
-
-    <!-- Main Content -->
-    <div
-      :style="{ marginLeft: isSidebarVisible ? sidebarWidth : '0' }"
-      class="content flex-grow p-2 md:mt-12 mt-24"
-    >
+    <Sidebar v-if="isSidebarVisible" class="sidebar" />
+    <div :style="{ marginLeft: isSidebarVisible ? sidebarWidth : '0' }" class="content flex-grow p-2 md:mt-12 mt-24">
       <router-view />
     </div>
-
-    <!-- Footer -->
     <FancyFooter />
-
-
   </div>
 </template>
 
@@ -44,7 +29,6 @@ export default {
       isSidebarVisible.value = windowWidth.value >= 769 && currentRoute.value.startsWith('/admin');
     };
 
-    // Watch for route changes and toggle sidebar visibility
     watch(
       () => router.currentRoute.value.path,
       (newRoute) => {
@@ -54,7 +38,6 @@ export default {
       { immediate: true }
     );
 
-    // Watch for window resize and update sidebar visibility
     const onResize = () => {
       windowWidth.value = window.innerWidth;
       updateSidebarVisibility();

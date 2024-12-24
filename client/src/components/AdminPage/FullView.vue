@@ -101,7 +101,6 @@ export default {
             :key="item._id"
             class="relative rounded-lg shadow mb-5 bg-neutral-900 hover:border-current transition-all hover:bg-gray-800 break-inside-avoid"
         >
-            <!-- Dropdown button -->
             <div class="absolute top-3 right-3 z-10">
                 <button
                     @click="toggleDropdown(item._id)"
