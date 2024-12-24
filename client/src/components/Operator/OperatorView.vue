@@ -67,7 +67,6 @@ export default {
 
 <template>
     <div class="mt-6">
-        <!-- Loading state -->
         <div v-if="loading" class="flex justify-center items-center">
             <div class="text-center">
                 <svg
@@ -94,12 +93,10 @@ export default {
             </div>
         </div>
 
-        <!-- Error state -->
         <div v-if="error" class="text-red-500 text-center">
             {{ error }}
         </div>
 
-        <!-- Operators List -->
         <div
             v-if="!loading && operators.length"
             class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
@@ -109,7 +106,6 @@ export default {
                 :key="operator._id"
                 class="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col h-full"
             >
-
                 <div class="flex flex-col items-center pb-10 mt-6">
                     <img
                         class="sm:w-48 sm:h-48 object-cover mb-3 rounded-full shadow-lg w-36 h-36"
@@ -144,7 +140,6 @@ export default {
             </div>
         </div>
 
-        <!-- kalo gagal -->
         <p v-if="!loading && !operators.length" class="text-gray-500 text-center">
             No operators available.
         </p>

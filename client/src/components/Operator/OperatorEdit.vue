@@ -28,8 +28,6 @@ export default {
                     },
                 });
                 operator.value = result.data;
-
-                // Ensure the form matches the fetched operator data
                 form.value = {
                     image: operator.value.image || '',
                     name: operator.value.name || '',
@@ -43,7 +41,7 @@ export default {
         };
 
         const submitForm = async () => {
-            const updatedOperator = { ...form.value }; // Updated to use the same format
+            const updatedOperator = { ...form.value };
 
             try {
                 await axios.patch(`http://localhost:4000/operator/${props.id}`, updatedOperator, {
@@ -78,7 +76,6 @@ export default {
             <h1 class="mb-3 text-white text-center md:text-2xl text-xl">Edit Operator</h1>
 
             <form @submit.prevent="submitForm">
-                <!-- Image URL Input -->
                 <div class="mb-5">
                     <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image URL</label>
                     <input
@@ -91,7 +88,6 @@ export default {
                     />
                 </div>
 
-                <!-- Name Input -->
                 <div class="mb-5">
                     <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Operator Name</label>
                     <input
@@ -104,7 +100,6 @@ export default {
                     />
                 </div>
 
-                <!-- Age Input -->
                 <div class="mb-5">
                     <label for="age" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age</label>
                     <input
@@ -118,7 +113,6 @@ export default {
                     />
                 </div>
 
-                <!-- Phone Number Input -->
                 <div class="mb-5">
                     <label for="NoTelp" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
                     <input
@@ -131,7 +125,6 @@ export default {
                     />
                 </div>
 
-                <!-- Email Input -->
                 <div class="mb-5">
                     <label for="Email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                     <input

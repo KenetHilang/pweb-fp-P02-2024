@@ -4,7 +4,7 @@
             <button @click="onClose" class="close-button">X</button>
             <h1 class="mb-3 text-white text-center md:text-2xl text-xl ">Form Pengisian</h1>
             <form class="max-w-md mx-auto" @submit.prevent="submitForm">
-                <!-- Image URL Input -->
+
                 <div class="mb-5">
                     <label for="pic" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image URL</label>
                     <input
@@ -17,7 +17,6 @@
                     />
                 </div>
 
-                <!-- Item Name Input -->
                 <div class="mb-5">
                     <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Item Name</label>
                     <input
@@ -30,7 +29,6 @@
                     />
                 </div>
 
-                <!-- Amount Input -->
                 <div class="mb-5">
                     <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount</label>
                     <input
@@ -44,7 +42,6 @@
                     />
                 </div>
 
-                <!-- Condition Input -->
                 <div class="mb-5">
                     <label for="condition" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Condition</label>
                     <select
@@ -61,7 +58,6 @@
                     </select>
                 </div>
 
-                <!-- Submit Button -->
                 <button
                     type="submit"
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -107,7 +103,6 @@ export default {
                     console.log('Form submitted successfully:', response.data);
                     alert('Form submitted successfully!');
                     
-                    // Clear form data
                     this.form = {
                         pic: '',
                         name: '',
@@ -115,7 +110,6 @@ export default {
                         condition: '',
                     };
 
-                    // Notify parent to close the form
                     if (this.onClose) {
                         this.onClose();
                     }

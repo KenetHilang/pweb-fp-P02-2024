@@ -8,7 +8,7 @@ import OperatorEdit from '@/components/Operator/OperatorEdit.vue';
 import BorrowForm from '@/components/Operator/BorrowForm.vue';
 import DisplayBorrowed from '@/components/Operator/DisplayBorrowed.vue';
 import DisplayEquipment from '@/components/Operator/DisplayEquipment.vue';
-import Rules from '@/views/Rules.vue'; // Pastikan path sesuai lokasi file
+import Rules from '@/views/Rules.vue';
 import HomePageOperator from '@/views/HomePageOperator.vue';
 
 const router = createRouter({
@@ -86,10 +86,9 @@ const router = createRouter({
     {
       path: '/rules',
       name: 'rules',
-      component: Rules, // Gunakan nama komponen yang diimpor
+      component: Rules,
       meta: { requiresAuth: false },
     },
-    // Add catch-all route at the end
     {
       path: '/:pathMatch(.*)*',
       redirect: '/'
@@ -97,36 +96,30 @@ const router = createRouter({
   ],
 });
 
-// Modified navigation guard
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token');
   const role = localStorage.getItem('role');
 
-  // If route doesn't exist in router configuration, redirect to home
   if (!to.name) {
     next('/');
     return;
   }
 
-  // If route requires authentication and no token exists
   if (to.meta.requiresAuth && !token) {
     next('/');
     return;
   }
 
-  // If route requires admin role
   if (to.meta.requiresAdmin && role !== 'admin') {
     next('/');
     return;
   }
 
-  // If route requires operator role
   if (to.meta.requiresOperator && role !== 'operator') {
     next('/');
     return;
   }
 
-  // If logged in user tries to access login page
   if (to.path === '/' && token) {
     if (role === 'admin') {
       next('/admin');
