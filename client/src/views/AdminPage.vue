@@ -27,7 +27,7 @@ export default {
 <template>
     <div>
         <!-- FullView Section -->
-        <div>
+        <div class="mb-4 mt-10">
             <h1 class="font-bold text-3xl mb-2 text-center text-black md:text-slate-50">List of Items Available</h1>
             <FullView />
         </div>

@@ -25,7 +25,7 @@ import OperatorAdd from '@/components/Operator/OperatorAdd.vue';
 </script>
 
 <template>
-    <h1 class="font-bold text-3xl mb-2 text-center text-black md:text-slate-50">
+    <h1 class="font-bold text-3xl mb-2 text-center text-black md:text-slate-50 mt-10">
         List of Operators
     </h1>
     <OperatorView />

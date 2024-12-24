@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LoginPage from '@/views/LoginPage.vue';
 import AdminPage from '@/views/AdminPage.vue';
 import EditItem from '@/components/AdminPage/EditItem.vue';
-import OperatorPage from '@/views/HomePageOperator.vue';
+import AdminOperatorPage from '@/views/OperatorPage.vue';
 import SummaryPage from '@/views/SummaryPage.vue';
 import OperatorEdit from '@/components/Operator/OperatorEdit.vue';
 import BorrowForm from '@/components/Operator/BorrowForm.vue';
@@ -76,7 +76,7 @@ const router = createRouter({
       meta: { requiresAuth: true, requiresOperator: true },
     },
     {
-      path: '/rules', // Tambahkan rute baru untuk RulesPage
+      path: '/rules',
       name: 'rules',
       component: Rules, // Gunakan nama komponen yang diimpor
       meta: { requiresAuth: false },

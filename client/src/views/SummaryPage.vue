@@ -122,7 +122,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="mt-10">
     <h1 class="font-bold text-3xl mb-4 text-center text-white">Summary</h1>
 
         <!-- Error Message -->

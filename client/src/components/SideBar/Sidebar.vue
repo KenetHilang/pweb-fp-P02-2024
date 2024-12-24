@@ -49,7 +49,7 @@ export default {
     left: 0;
     bottom: 0;
     padding: 0.5em;
-    margin-top: 2.8rem;
+    margin-top: 5rem;
 
     transition: 0.3s ease;
 

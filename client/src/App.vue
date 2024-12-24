@@ -1,21 +1,13 @@
 <template>
   <div class="min-h-screen flex flex-col">
-    <!-- Navbar selalu terlihat di semua halaman -->
     <NavBar />
-
-    <!-- Sidebar hanya muncul di halaman admin dan operator -->
     <Sidebar 
-      v-if="isSidebarVisible && (currentRoute === 'admin' || currentRoute === 'operator')" 
+      v-if="isSidebarVisible && currentRoute !== '/'"
       class="sidebar" 
     />
-
-    <!-- Konten utama -->
-    <div :style="{ marginLeft: isSidebarVisible && (currentRoute === 'admin' || currentRoute === 'operator') ? sidebarWidth : '0' }" class="content p-2 mt-12">
-      <!-- Router view untuk menampilkan halaman -->
+    <div :style="{ marginLeft: isSidebarVisible ? sidebarWidth : '0' }" class="content p-2 mt-12">
       <router-view />
     </div>
-
-    <!-- Footer selalu terlihat di semua halaman -->
     <FancyFooter />
   </div>
 </template>
@@ -24,29 +16,22 @@
 import { ref, watch } from 'vue';
 import Sidebar from '@/components/SideBar/Sidebar.vue';
 import NavBar from '@/components/NavBar/NavBar.vue';
-import FancyFooter from '@/components/Footer/Footer.vue'; // Import FancyFooter
-import { sidebarWidth } from '@/components/SideBar/state'; // Import ukuran sidebar
+import FancyFooter from '@/components/Footer/Footer.vue';
+import { sidebarWidth } from '@/components/SideBar/state';
 import { useRouter } from 'vue-router';
 
 export default {
   components: { Sidebar, NavBar, FancyFooter },
   setup() {
-    const isSidebarVisible = ref(false); // Default: Sidebar tidak terlihat
-    const currentRoute = ref(''); // Menyimpan nama rute saat ini
+    const isSidebarVisible = ref(true);
+    const currentRoute = ref('');
     const router = useRouter();
 
-    // Perbarui nama rute saat berganti halaman
     watch(
-      () => router.currentRoute.value.name, // Mengawasi perubahan rute
+      () => router.currentRoute.value.path,
       (newRoute) => {
         currentRoute.value = newRoute;
-
-        // Tampilkan sidebar hanya di halaman admin dan operator
-        if (newRoute === 'admin' || newRoute === 'operator') {
-          isSidebarVisible.value = true;
-        } else {
-          isSidebarVisible.value = false;
-        }
+        isSidebarVisible.value = newRoute !== '/';
       },
       { immediate: true }
     );
@@ -57,7 +42,6 @@ export default {
 </script>
 
 <style>
-
 body {
   margin: 0;
   min-height: 100vh;
