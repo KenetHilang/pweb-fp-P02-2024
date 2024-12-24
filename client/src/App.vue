@@ -1,45 +1,61 @@
+<template>
+  <div>
+    <!-- Navbar selalu terlihat di semua halaman -->
+    <NavBar />
+
+    <!-- Sidebar hanya muncul di halaman admin dan operator -->
+    <Sidebar 
+      v-if="isSidebarVisible && (currentRoute === 'admin' || currentRoute === 'operator')" 
+      class="sidebar" 
+    />
+
+    <!-- Konten utama -->
+    <div :style="{ marginLeft: isSidebarVisible && (currentRoute === 'admin' || currentRoute === 'operator') ? sidebarWidth : '0' }" class="content p-2 mt-12">
+      <!-- Router view untuk menampilkan halaman -->
+      <router-view />
+    </div>
+
+    <!-- Footer selalu terlihat di semua halaman -->
+    <FancyFooter />
+  </div>
+</template>
+
 <script>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import Sidebar from '@/components/SideBar/Sidebar.vue';
 import NavBar from '@/components/NavBar/NavBar.vue';
-import { sidebarWidth } from '@/components/SideBar/state'; // Ensure you import sidebarWidth
-import LoginPage from './views/LoginPage.vue';
+import FancyFooter from '@/components/Footer/Footer.vue'; // Import FancyFooter
+import { sidebarWidth } from '@/components/SideBar/state'; // Import ukuran sidebar
+import { useRouter } from 'vue-router';
 
 export default {
-  components: { Sidebar, NavBar, LoginPage },
+  components: { Sidebar, NavBar, FancyFooter },
   setup() {
-    const isSidebarVisible = ref(true);
-    const isLoggedIn = ref(false); // Track login status
+    const isSidebarVisible = ref(false); // Default: Sidebar tidak terlihat
+    const currentRoute = ref(''); // Menyimpan nama rute saat ini
+    const router = useRouter();
 
-    const toggleSidebar = () => {
-      isSidebarVisible.value = !isSidebarVisible.value;
-    };
+    // Perbarui nama rute saat berganti halaman
+    watch(
+      () => router.currentRoute.value.name, // Mengawasi perubahan rute
+      (newRoute) => {
+        currentRoute.value = newRoute;
 
-    // Method to update login status
-    const updateLoginStatus = () => {
-      isLoggedIn.value = true;
-    };
+        // Tampilkan sidebar hanya di halaman admin dan operator
+        if (newRoute === 'admin' || newRoute === 'operator') {
+          isSidebarVisible.value = true;
+        } else {
+          isSidebarVisible.value = false;
+        }
+      },
+      { immediate: true }
+    );
 
-    return { sidebarWidth, isSidebarVisible, toggleSidebar, isLoggedIn, updateLoginStatus };
-  }
+    return { sidebarWidth, isSidebarVisible, currentRoute };
+  },
 };
 </script>
 
-<template>
-  <div>
-    <!-- Content visible only if the user is logged in -->
-    <div v-if="isLoggedIn">
-      <NavBar :toggleSidebar="toggleSidebar" />
-      <Sidebar v-show="isSidebarVisible" class="sidebar" />
-      <div :style="{ marginLeft: isSidebarVisible ? sidebarWidth : '0' }" class="content p-2 mt-12">
-        <!-- Render route content here -->
-        <router-view />
-      </div>
-    </div>
-
-    <!-- Login link if not logged in -->
-    <div v-else>
-      <LoginPage @login="updateLoginStatus"/>
-    </div>
-  </div>
-</template>
+<style>
+/* Tambahkan gaya global di sini jika diperlukan */
+</style>
