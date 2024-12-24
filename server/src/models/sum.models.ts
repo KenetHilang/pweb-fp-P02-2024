@@ -4,9 +4,10 @@ export interface BorrowInter {
 	item_name: string;
 	amount: string;
 	borrow_date: Date;
-	return_date?: Date | null;
+	return_date: Date; // Changed to required
 	borrower_name: string;
 	officer_name: string;
+	is_returned: boolean | null; // Add this field
 }
 
 const BorrowSchema = new mongoose.Schema({
@@ -24,7 +25,7 @@ const BorrowSchema = new mongoose.Schema({
     },
     return_date: {
         type: Date,
-        default: null
+        required: true // Changed from default: null to required: true
     },
     borrower_name: {
         type: String,
@@ -33,6 +34,10 @@ const BorrowSchema = new mongoose.Schema({
     officer_name: {
         type: String,
         required: true
+    },
+    is_returned: {
+        type: Boolean,
+        default: null
     }
 });
 

@@ -12,7 +12,7 @@ export default {
         const fetchBorrowedItems = async () => {
             loading.value = true;
             try {
-                const result = await axios.get('http://localhost:4000/operator/all-equipment/borrows');
+                const result = await axios.get('http://localhost:4000/borrow/');
                 if (result.data && result.data.data) {
                     borrowedItems.value = result.data.data;
                 } else {
@@ -25,6 +25,26 @@ export default {
             }
         };
 
+        const returnItem = async (borrowId) => {
+            try {
+                const response = await axios.post(`http://localhost:4000/borrow/return/${borrowId}`);
+                if (response.data.status === 'success') {
+                    // Update the specific item's is_returned status locally
+                    const itemIndex = borrowedItems.value.findIndex(item => item._id === borrowId);
+                    if (itemIndex !== -1) {
+                        borrowedItems.value[itemIndex].is_returned = true;
+                    }
+                }
+            } catch (err) {
+                error.value = err.response?.data?.message || 'Error returning item';
+            }
+        };
+
+        // Simplify canBeReturned to only check is_returned
+        const canBeReturned = (item) => {
+            return !item.is_returned;
+        };
+
         onMounted(() => {
             fetchBorrowedItems();
         });
@@ -32,7 +52,9 @@ export default {
         return {
             borrowedItems,
             error,
-            loading
+            loading,
+            returnItem,
+            canBeReturned
         };
     }
 };
@@ -75,6 +97,9 @@ export default {
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                             Return Date
                         </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                            Actions
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-gray-600">
@@ -96,6 +121,18 @@ export default {
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                             {{ new Date(item.return_date).toLocaleDateString() }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <button 
+                                v-if="canBeReturned(item)"
+                                @click="returnItem(item._id)"
+                                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                            >
+                                Return
+                            </button>
+                            <span v-else class="py-2 px-4 text-gray-500">
+                                Returned
+                            </span>
                         </td>
                     </tr>
                 </tbody>

@@ -45,8 +45,8 @@ const router = createRouter({
       props: true,
     },
     {
-      path: '/operator',
-      name: 'operator',
+      path: '/HomePageOperator',
+      name: 'HomePageOperator',
       component: HomePageOperator,
     },
     {

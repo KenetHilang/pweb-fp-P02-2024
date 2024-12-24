@@ -11,7 +11,7 @@ const router = useRouter();
 const fetchEquipments = async () => {
     loading.value = true;
     try {
-        const result = await axios.get('http://localhost:4000/operator/all-equipment');
+        const result = await axios.get('http://localhost:4000/admin/');
         if (result.data && result.data.data) {
             equipments.value = result.data.data;
         } else {
@@ -24,10 +24,14 @@ const fetchEquipments = async () => {
     }
 };
 
-const handleBorrow = (equipmentId) => {
+const handleBorrow = (item) => {
     router.push({
         name: 'book-equipment',
-        query: { equipmentId }
+        query: { 
+            itemId: item._id,
+            itemName: item.name,
+            itemAmount: item.amount
+        }
     });
 };
 
@@ -87,7 +91,7 @@ onMounted(() => {
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                             <button 
-                                @click="handleBorrow(item._id)"
+                                @click="handleBorrow(item)"
                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                 :disabled="item.amount <= 0"
                             >

@@ -24,57 +24,98 @@ class BorrowServices {
             throw new Error("Item name does not match the database entry :(");
         }
 
-        borrowData.return_date = null;
-
-        // Convert borrowed amount and item amount to numbers
-        const borrowAmount = parseInt(borrowData.amount || "0", 10);
-        const stock = parseInt(item.amount || "0", 10);
-
-        // Check if the item has enough stock to be borrowed
-        if (stock < borrowAmount) {
-            throw new Error("Not enough stock available :( {stock: " + item.amount + ", borrowAmount: " + borrowAmount + "}");
+        // Validate return date
+        if (!borrowData.return_date) {
+            throw new Error("Return date is required :(");
         }
 
-        // Create a new Borrowed document and save it
-        const borrowed = new Borrowed(borrowData);
+        const returnDate = new Date(borrowData.return_date);
+        const now = new Date();
 
-        // Update the item's stock and save
-        item.amount = (stock - borrowAmount).toString(); // Convert back to string if necessary
-        await item.save(); // Save the updated item document
+        if (returnDate <= now) {
+            throw new Error("Return date must be in the future :(");
+        }
 
-        return await borrowed.save(); // Save the borrowed record
+        // Convert amounts to numbers and validate
+        const borrowAmount = parseInt(borrowData.amount || "0", 10);
+        const currentStock = parseInt(item.amount || "0", 10);
+
+        // Validate amounts
+        if (isNaN(borrowAmount) || borrowAmount <= 0) {
+            throw new Error("Invalid borrow amount :(");
+        }
+
+        if (isNaN(currentStock)) {
+            throw new Error("Invalid item stock :(");
+        }
+
+        // Check if enough stock is available
+        if (currentStock < borrowAmount) {
+            throw new Error(`Not enough stock available :( (Available: ${currentStock}, Requested: ${borrowAmount})`);
+        }
+
+        // Calculate new stock amount
+        const newStock = currentStock - borrowAmount;
+
+        try {
+            // Update item stock in database
+            await Items.findByIdAndUpdate(itemId, { amount: newStock.toString() });
+
+            // Create and save borrow record
+            const borrowed = new Borrowed({
+                ...borrowData,
+                return_date: returnDate
+            });
+
+            return await borrowed.save();
+        } catch (error) {
+            // If saving fails, rollback the stock update
+            await Items.findByIdAndUpdate(itemId, { amount: currentStock.toString() });
+            throw new Error("Failed to process borrow transaction :(");
+        }
     }
 
     async ReturnItem(borrowId: string) {
-        // Find the borrowed item in the Borrowed collection
+        // Find the borrowed item
         const borrowed = await Borrowed.findById(borrowId);
 
         if (!borrowed) {
             throw new Error("Borrowed item not found :(");
         }
 
-        // Find the item in the Items collection
+        // Find the item in Items collection
         const item = await Items.findOne({ name: borrowed.item_name });
 
         if (!item) {
             throw new Error("Item not found :(");
         }
 
-        if (borrowed.return_date !== null) {
+        // Check if already returned
+        if (borrowed.is_returned === true) {
             throw new Error("Item already returned :(");
         }
 
-        // Convert borrowed amount and item amount to numbers
+        // Convert amounts to numbers
         const borrowAmount = parseInt(borrowed.amount || "0", 10);
         const stock = parseInt(item.amount || "0", 10);
 
-        // Update the item's stock and save
-        item.amount = (stock + borrowAmount).toString(); // Convert back to string if necessary
-        await item.save(); // Save the updated item document
+        try {
+            // Update item stock
+            item.amount = (stock + borrowAmount).toString();
+            await item.save();
 
-        // Update the borrowed item's return_date and save
-        borrowed.return_date = new Date();
-        return await borrowed.save(); // Save the borrowed record
+            // Update borrowed record
+            borrowed.is_returned = true;
+            borrowed.return_date = new Date(); // Keep this for record
+            return await borrowed.save();
+        } catch (error) {
+            // Rollback if something fails
+            if (item) {
+                item.amount = stock.toString();
+                await item.save();
+            }
+            throw new Error("Failed to process return transaction :(");
+        }
     }
 }
 

@@ -40,34 +40,7 @@ const OperatorSchema = new mongoose.Schema({
     }
 });
 
-const bookingDataSchema = new mongoose.Schema({
-    item_name: {
-        type: String,
-        required: true
-    },
-    amount: {
-        type: String,
-        required: true
-    },
-    borrow_date: {
-        type: Date,
-        required: true
-    },
-    return_date: {
-        type: Date,
-        required: true
-    },
-    borrower_name: {
-        type: String,
-        required: true
-    },
-    officer_name: {
-        type: String,
-        required: true
-    }
-});
 
 export const Operator = mongoose.model("Operators", OperatorSchema);
-export const Booking = mongoose.model("Bookings", bookingDataSchema);
 
 export default Operator;
