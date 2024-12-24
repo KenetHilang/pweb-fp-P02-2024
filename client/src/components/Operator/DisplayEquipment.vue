@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 
@@ -7,6 +7,36 @@ const equipments = ref([]);
 const error = ref('');
 const loading = ref(true);
 const router = useRouter();
+
+const sortField = ref('name');
+const sortDirection = ref('asc');
+
+const toggleSort = (field) => {
+    if (sortField.value === field) {
+        sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
+    } else {
+        sortField.value = field;
+        sortDirection.value = 'asc';
+    }
+};
+
+const sortedEquipments = computed(() => {
+    return [...equipments.value].sort((a, b) => {
+        let compareResult = 0;
+        switch (sortField.value) {
+            case 'name':
+                compareResult = a.name.localeCompare(b.name);
+                break;
+            case 'amount':
+                compareResult = parseInt(a.amount) - parseInt(b.amount);
+                break;
+            case 'condition':
+                compareResult = a.condition.localeCompare(b.condition);
+                break;
+        }
+        return sortDirection.value === 'asc' ? compareResult : -compareResult;
+    });
+});
 
 const fetchEquipments = async () => {
     loading.value = true;
@@ -59,14 +89,26 @@ onMounted(() => {
             <table class="min-w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
                 <thead class="bg-gray-100 dark:bg-gray-700">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        <th @click="toggleSort('name')" 
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-200 hover:text-gray-900 transition-colors duration-200">
                             Equipment
+                            <span v-if="sortField === 'name'" class="ml-1">
+                                {{ sortDirection === 'asc' ? '↑' : '↓' }}
+                            </span>
                         </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        <th @click="toggleSort('amount')"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-200 hover:text-gray-900 transition-colors duration-200">
                             Available Amount
+                            <span v-if="sortField === 'amount'" class="ml-1">
+                                {{ sortDirection === 'asc' ? '↑' : '↓' }}
+                            </span>
                         </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        <th @click="toggleSort('condition')"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-200 hover:text-gray-900 transition-colors duration-200">
                             Condition
+                            <span v-if="sortField === 'condition'" class="ml-1">
+                                {{ sortDirection === 'asc' ? '↑' : '↓' }}
+                            </span>
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                             Action
@@ -74,19 +116,19 @@ onMounted(() => {
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-gray-600">
-                    <tr v-for="item in equipments" :key="item._id" class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <tr v-for="item in sortedEquipments" :key="item._id" class="hover:bg-gray-50 dark:hover:bg-gray-700 group">
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
                                 <img :src="item.pic" class="h-10 w-10 rounded-full mr-3" :alt="item.name">
-                                <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                <div class="text-sm font-medium text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
                                     {{ item.name }}
                                 </div>
                             </div>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
                             {{ item.amount }}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
                             {{ item.condition }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
