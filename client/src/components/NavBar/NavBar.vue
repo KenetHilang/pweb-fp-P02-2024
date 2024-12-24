@@ -16,9 +16,10 @@
         <!-- Aturan Peminjaman -->
         <router-link
           :to="rulesNavigationTarget"
+          v-if="showRulesButton"
           class="px-3 py-1 bg-blue-600 rounded-lg hover:bg-blue-700 transition"
         >
-          {{ isOnRulesPage ? (isGuest ? 'Back to Home' : 'Back to Dashboard') : 'Aturan Peminjaman' }}
+          {{ isOnRulesPage ? (role !== 'Guest' ? 'Back to Dashboard' : 'Back to Home') : 'Aturan Peminjaman' }}
         </router-link>
 
         <!-- User Profile -->
@@ -54,19 +55,29 @@ import { useRoute, useRouter } from 'vue-router';
 export default defineComponent({
   name: "Navbar",
   setup() {
-    const username = ref('');
-    const role = ref('');
+    const username = ref('Guest');
+    const role = ref('Guest');
     const route = useRoute();
     const router = useRouter();
 
-    // Tentukan apakah rute saat ini adalah rules
+    // Tentukan apakah saat ini berada di halaman login
+    const isOnLoginPage = computed(() => route.path === '/');
+
+    // Tentukan apakah saat ini berada di halaman rules
     const isOnRulesPage = computed(() => route.path === '/rules');
+
+    // Tentukan apakah tombol "Aturan Peminjaman" harus ditampilkan
+    const showRulesButton = computed(() => {
+      // Tombol selalu terlihat di semua halaman, termasuk login
+      return true;
+    });
 
     // Tentukan target navigasi tombol di halaman Rules
     const rulesNavigationTarget = computed(() => {
       if (isOnRulesPage.value) {
         if (role.value === 'admin') return '/admin';
         if (role.value === 'operator') return '/operator';
+        return '/'; // Guest kembali ke home
       }
       return '/rules';
     });
@@ -99,6 +110,8 @@ export default defineComponent({
       username,
       role,
       isOnRulesPage,
+      isOnLoginPage,
+      showRulesButton,
       rulesNavigationTarget,
       logout,
     };
