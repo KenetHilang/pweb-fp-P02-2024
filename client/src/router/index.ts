@@ -37,7 +37,14 @@ const router = createRouter({
     {
       path: '/admin/all-operator',
       name: 'all-operator',
-      component: OperatorPage,
+      component: AdminOperatorPage,
+      meta: { requiresAuth: true, requiresAdmin: true },
+    },
+    {
+      path: '/admin/editoperator/:id',
+      name: 'edit-admin',
+      component: OperatorEdit,
+      props: true,
       meta: { requiresAuth: true, requiresAdmin: true },
     },
     {

@@ -1,6 +1,7 @@
 <script>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import router from '@/router';
 
 export default {
     name: 'EditItem',
@@ -21,7 +22,11 @@ export default {
 
         const fetchItem = async () => {
             try {
-                const result = await axios.get(`http://localhost:4000/admin/${props.id}`);
+                const result = await axios.get(`http://localhost:4000/admin/${props.id}`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
                 item.value = result.data;
                 form.value = { ...item.value };
             } catch (error) {
@@ -30,16 +35,34 @@ export default {
         };
 
         const submitForm = async () => {
-            const updatedItem = {
-                pic: form.value.pic,
-                name: form.value.name,
-                amount: form.value.amount,
-                condition: form.value.condition,
-            };
+            const updatedItem = {};
+
+            if (form.value.pic !== item.value.pic) {
+                updatedItem.pic = form.value.pic;
+            }
+            if (form.value.name !== item.value.name) {
+                updatedItem.name = form.value.name;
+            }
+            if (form.value.amount !== item.value.amount) {
+                updatedItem.amount = form.value.amount;
+            }
+            if (form.value.condition !== item.value.condition) {
+                updatedItem.condition = form.value.condition;
+            }
+
+            if (Object.keys(updatedItem).length === 0) {
+                alert('No changes made.');
+                return;
+            }
 
             try {
-                await axios.patch(`http://localhost:4000/admin/${props.id}`, updatedItem);
+                await axios.patch(`http://localhost:4000/admin/${props.id}`, updatedItem , {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
                 alert('Item updated successfully!');
+                router.push('/admin');
             } catch (error) {
                 console.error('Error updating item:', error);
                 alert('Failed to update item. Please try again.');
@@ -51,7 +74,6 @@ export default {
         });
 
         return {
-            item,
             form,
             submitForm,
         };
@@ -74,7 +96,6 @@ export default {
                         v-model="form.pic"
                         placeholder="https://example.com/image.jpg"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-                        required
                     />
                 </div>
 
@@ -86,7 +107,6 @@ export default {
                         v-model="form.name"
                         placeholder="Computer"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-                        required
                     />
                 </div>
 
@@ -98,7 +118,6 @@ export default {
                         v-model="form.amount"
                         placeholder="15"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-                        required
                         min="0"
                     />
                 </div>
@@ -109,7 +128,6 @@ export default {
                         id="condition"
                         v-model="form.condition"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-                        required
                     >
                         <option value="" disabled>Select Condition</option>
                         <option value="New">New</option>

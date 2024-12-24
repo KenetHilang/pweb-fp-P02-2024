@@ -25,14 +25,15 @@ import OperatorAdd from '@/components/Operator/OperatorAdd.vue';
 </script>
 
 <template>
-    <h1 class="font-bold text-3xl mb-2 text-center text-black md:text-slate-50 mt-10">
+    <div class="mt-10 mb-4">
+    <h1 class="font-bold text-3xl mb-2 text-center text-black md:text-slate-50">
         List of Operators
     </h1>
     <OperatorView />
 
-    <button class="tombol" @click="toggleForm">+</button>
+    <button class="tombol hover:bg-green-700 transition-all" @click="toggleForm">+</button>
     <OperatorAdd v-if="formActive" @close="closeForm" />
-    
+    </div> 
 </template>
 
 <style>

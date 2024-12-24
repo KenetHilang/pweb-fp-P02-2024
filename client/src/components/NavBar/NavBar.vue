@@ -136,7 +136,7 @@ img {
   object-fit: cover;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 769px) {
   nav .container {
     flex-wrap: wrap;
   }

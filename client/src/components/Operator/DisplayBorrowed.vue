@@ -12,7 +12,11 @@ export default {
         const fetchBorrowedItems = async () => {
             loading.value = true;
             try {
-                const result = await axios.get('http://localhost:4000/borrow/');
+                const result = await axios.get('http://localhost:4000/borrow/', {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
                 if (result.data && result.data.data) {
                     borrowedItems.value = result.data.data;
                 } else {
@@ -27,7 +31,11 @@ export default {
 
         const returnItem = async (borrowId) => {
             try {
-                const response = await axios.post(`http://localhost:4000/borrow/return/${borrowId}`);
+                const response = await axios.post(`http://localhost:4000/borrow/return/${borrowId}`, {}, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
                 if (response.data.status === 'success') {
                     // Update the specific item's is_returned status locally
                     const itemIndex = borrowedItems.value.findIndex(item => item._id === borrowId);

@@ -114,7 +114,7 @@
         <div class="subject-card hover:shadow-lg transition">
           <div class="circle bg-teal-100 mx-auto">
             <img
-              src="../assets/machine-learning.png"
+              src="../../machine-learning.png"
               alt="Machine Learning"
               class="h-12 w-12"
             />
@@ -127,7 +127,7 @@
         <div class="subject-card hover:shadow-lg transition">
           <div class="circle bg-teal-100 mx-auto">
             <img
-              src="../assets/pngwing.com.png"
+              src="../../pngwing.com.png"
               alt="Embedded System"
               class="h-12 w-12"
             />

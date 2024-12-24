@@ -23,7 +23,11 @@ export default {
         // Fetch available items
         const fetchItems = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/admin/');
+                const response = await axios.get('http://localhost:4000/admin/', {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
                 if (response.data && response.data.data) {
                     availableItems.value = response.data.data;
                 }
@@ -36,7 +40,11 @@ export default {
         // Add console.log for debugging
         const fetchOfficers = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/operator/');
+                const response = await axios.get('http://localhost:4000/operator/', {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
                 //console.log('Officers response:', response.data); // Debug log
                 if (response.data && response.data.data) {
                     availableOfficers.value = response.data.data;
@@ -106,7 +114,11 @@ export default {
 
                 const response = await axios.post(
                     `http://localhost:4000/borrow/${selectedItem.value._id}`,
-                    formData.value
+                    formData.value, {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('token')}`,
+                        },
+                    }
                 );
 
                 if (response.data.status === 'success') {

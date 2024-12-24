@@ -13,7 +13,7 @@ export default {
 </script>
 
 <template>
-        <div class="sidebar" :style="{ width: sidebarWidth }">
+    <div class="sidebar" :style="{ width: sidebarWidth }">
 
         <SidebarLink to="/admin" icon="pi pi-home">Items</SidebarLink>
         <SidebarLink to="/admin/all-operator" icon="pi pi-users">Operators</SidebarLink>
