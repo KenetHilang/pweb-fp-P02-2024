@@ -33,35 +33,64 @@
             <span class="block text-gray-300 text-xs">as {{ role }}</span>
           </div>
         </div>
+
+        <!-- Logout Button -->
+        <button
+          v-if="username !== 'Guest'"
+          @click="logout"
+          class="px-3 py-1 bg-red-600 rounded-lg hover:bg-red-700 transition"
+        >
+          Logout
+        </button>
       </div>
     </div>
   </nav>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { defineComponent, ref, computed, onMounted, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 export default defineComponent({
   name: "Navbar",
   setup() {
     const username = ref('');
     const role = ref('');
+    const route = useRoute();
+    const router = useRouter();
 
     // Tentukan apakah rute saat ini adalah rules
-    const route = useRoute();
     const isOnRulesPage = computed(() => route.path === '/rules');
 
     // Ambil data pengguna dari localStorage
-    onMounted(() => {
+    const updateProfile = () => {
       username.value = localStorage.getItem('username') || 'Guest';
-      role.value = localStorage.getItem('role') || 'Operator';
+      role.value = localStorage.getItem('role') || 'Guest';
+    };
+
+    onMounted(() => {
+      updateProfile();
     });
+
+    watch(route, () => {
+      updateProfile(); // Update profil setiap kali rute berubah
+    });
+
+    // Fungsi logout
+    const logout = () => {
+      localStorage.removeItem('username');
+      localStorage.removeItem('role');
+      localStorage.removeItem('token');
+      username.value = 'Guest';
+      role.value = 'Guest';
+      router.push('/'); // Kembali ke halaman login
+    };
 
     return {
       username,
       role,
       isOnRulesPage,
+      logout,
     };
   },
 });
