@@ -1,12 +1,18 @@
 <script>
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 export default {
     name: 'BorrowForm',
     setup() {
         const route = useRoute();
+        const router = useRouter();
+        
+        const goHome = () => {
+            router.push('/');
+        };
+
         const formData = ref({
             item_name: '',
             amount: '',
@@ -79,7 +85,7 @@ export default {
             if (!selectedItem.value || !formData.value.amount) return true;
             const requestedAmount = parseInt(formData.value.amount);
             const availableAmount = parseInt(selectedItem.value.amount);
-            return requestedAmount > 0 && requestedAmount <= availableAmount;
+            return requestedAmount > 0 && requestedAmount < availableAmount;
         });
 
         // Update error message to include negative numbers
@@ -88,7 +94,7 @@ export default {
             const requestedAmount = parseInt(formData.value.amount);
             const availableAmount = parseInt(selectedItem.value.amount);
 
-            if (requestedAmount <= 0) {
+            if (requestedAmount < 0) {
                 return 'Amount must be greater than 0';
             }
             if (requestedAmount > availableAmount) {
@@ -192,7 +198,8 @@ export default {
             formatTo1PM,
             availableItemsFiltered,
             validateAmount,
-            amountError
+            amountError,
+            goHome
         };
     }
 };
@@ -200,6 +207,12 @@ export default {
 
 <template>
     <div class="max-w-2xl mx-auto p-6">
+        <div class="mb-4">
+            <button @click="goHome" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                Back to Home
+            </button>
+        </div>
+        
         <form @submit.prevent="submitForm" class="bg-white shadow-md rounded-lg p-8">
             <h2 class="text-2xl font-bold mb-6 text-gray-800">Borrow Equipment</h2>
 

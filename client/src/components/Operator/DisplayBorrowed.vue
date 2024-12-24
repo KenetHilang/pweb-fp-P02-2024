@@ -1,10 +1,17 @@
 <script>
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
+import { useRouter } from 'vue-router';
 
 export default {
     name: 'DisplayBorrowed',
     setup() {
+        const router = useRouter();
+        
+        const goHome = () => {
+            router.push('/');
+        };
+
         const borrowedItems = ref([]);
         const error = ref('');
         const loading = ref(true);
@@ -105,7 +112,8 @@ export default {
             sortField,
             sortDirection,
             toggleSort,
-            sortedBorrowedItems
+            sortedBorrowedItems,
+            goHome
         };
     }
 };
@@ -113,7 +121,13 @@ export default {
 
 <template>
     <div class="container mx-auto px-4 py-8">
-        <h2 class="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">Borrowed Items List</h2>
+        <div class="flex justify-between items-center mb-6">
+            <button @click="goHome" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                Back to Home
+            </button>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Borrowed Items List</h2>
+            <div class="w-24"></div><!-- Spacer for alignment -->
+        </div>
 
         <!-- Loading state -->
         <div v-if="loading" class="flex justify-center items-center">
