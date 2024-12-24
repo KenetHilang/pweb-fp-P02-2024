@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="min-h-screen flex flex-col">
     <!-- Navbar selalu terlihat di semua halaman -->
     <NavBar />
 
@@ -57,5 +57,9 @@ export default {
 </script>
 
 <style>
-/* Tambahkan gaya global di sini jika diperlukan */
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
 </style>

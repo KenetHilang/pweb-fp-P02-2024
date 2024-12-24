@@ -4,7 +4,7 @@
       <!-- Logo and Title -->
       <div class="flex items-center space-x-4">
         <img 
-          src="C:\Users\Aisyah Rahmasari\pweb-fp-P02-2024\client\src\assets\LABKCKS.png" 
+          src="../../assets/LABKCKS.png" 
           alt="Lab Logo" 
           class="h-16 w-16 rounded-full"
         />
@@ -25,7 +25,7 @@
         <!-- User Profile -->
         <div v-if="username && role" class="flex items-center space-x-3">
           <img 
-            src="C:\Users\Aisyah Rahmasari\pweb-fp-P02-2024\client\src\assets\PROFILE.png" 
+            src="../../assets/PROFILE.png" 
             alt="User Profile Logo" 
             class="h-12 w-12 rounded-full border border-gray-200 bg-white p-1"
           />
