@@ -11,9 +11,48 @@
 
 <hr>
 
-## Project Overview
+## **Project Overview**
 
 This project is our last project for our Web Development course in 2024. The goal of this project is to develop a web application that can help LAB KCKS monitor the items borrowed by students. In this system, students cannot borrow items directly, but they must borrow through a lab operator.
+
+## **Data Models**
+```bash
+enum Role {
+	'USER',
+	'ADMIN'
+}
+
+type User = {
+	username: string;
+	password: string;
+	role: Role;
+}
+
+type Items = {
+    pic: string;
+	name: string;
+	amount: string;
+	condition: string;
+	created_at: Date;
+}
+
+type BorrowItems = {
+	item_name: string;
+	amount: string;
+	borrow_date: Date;
+	return_date: Date;
+	borrower_name: string;
+	officer_name: string;
+}
+
+type Operators = {
+    image: string;
+    name: string;
+    age: string;
+    NoTelp: string;
+    Email: string;
+}
+```
 
 ## **Main Features**
 ### **Home**
@@ -39,7 +78,7 @@ This project is our last project for our Web Development course in 2024. The goa
 
 ## Technologies Used
 
-- **Frontend**: HTML, CSS, JavaScript, Vue.js
+- **Frontend**: HTML, CSS, TypeScript, Vue.js
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB
 - **Version Control**: Git, GitHub
@@ -96,3 +135,33 @@ This project is our last project for our Web Development course in 2024. The goa
 - Open your browser and navigate to `http://localhost:5173` to view the application.
 - Register for a new account or log in with existing credentials.
 - Explore the features and functionalities of the web application.
+
+## Documentation
+
+### **Home Page**
+![Home_Page](./documentation/Home.png)
+
+### **Admin Page**
+
+#### **/admin**
+![Admin_Page](./documentation/admindash.png)
+
+#### **/admin/all-operator**
+![Admin_Operators](./documentation/adminoperator.png)
+
+#### **/admin/summary**
+![Admin_Summary](./documentation/adminsum.png)
+
+### **Operator Page**
+
+#### **/HomePageOperator**
+![Homepage](./documentation/operatorhome.png)
+
+#### **/operator/book-equipment**
+![Booking](./documentation/operatorbook.png)
+
+#### **/operator/all-equipment**
+![All_Equipment](./documentation/operatorall.png)
+
+#### **/operator/borrowed-items**
+![Borrowed](./documentation/operatorborrowed.png)
