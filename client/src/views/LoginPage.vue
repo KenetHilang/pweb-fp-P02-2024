@@ -36,18 +36,21 @@
     </div>
 
     <!-- Additional Content Section -->
-    <div class="hero-section bg-gradient-to-b from-blue-200 to-teal-100 flex items-center justify-center min-h-[75vh]">
+    <div class="hero-section bg-gradient-to-b from-blue-200 to-teal-100 flex items-center justify-center min-h-[30vh]">
       <div class="container mx-auto px-6 lg:flex lg:items-center">
         <!-- Left Content -->
         <div class="text-content max-w-lg text-center lg:text-left">
-          <p class="text-sm text-gray-500 font-semibold">HMIT ITS</p>
-          <h1 class="text-4xl font-bold mt-2 mb-4 text-gray-800">Lab KCKS</h1>
+          <p class="text-sm text-gray-500 font-semibold mb-2">HMIT ITS</p>
+          <h1 class="text-4xl font-bold mt-2 mb-8 text-gray-800">Lab KCKS</h1>
           <p class="text-gray-600 mb-6">
             "Lab KCKS ITS mengembangkan solusi inovatif untuk smart city dan keamanan siber, mendukung transformasi digital yang aman dan berkelanjutan."
           </p>
-          <button class="bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 transition">
-            Buy Now &#8594;
-          </button>
+          <button 
+  class="bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 transition mb-8"
+  @click="scrollToPopularSubjects"
+>
+  Read Now &#8594;
+</button>
         </div>
 
         <!-- Right Image -->
@@ -62,18 +65,17 @@
     </div>
 
     <!-- Popular Subjects Section -->
-    <div class="min-h-screen bg-gray-50 py-12">
+    <div id="popular-subjects" class="min-h-screen flex flex-col justify-center items-center gradient-bg">
       <!-- Title -->
-      <div class="text-center mb-10">
+      <div class="text-center mb-8">
         <h2 class="text-3xl font-bold text-teal-600">Our Popular Subjects</h2>
-        <div class="mt-2 w-16 h-1 mx-auto bg-teal-600 rounded-full"></div>
       </div>
 
       <!-- Cards -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto px-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
         <!-- Card 1 -->
-        <div class="subject-card hover:shadow-lg transition">
-          <div class="circle bg-teal-100 mx-auto">
+        <div class="subject-card hover:shadow-lg transition flex flex-col justify-center items-center">
+          <div class="circle bg-teal-100 h-20 w-20 flex items-center justify-center">>
             <img
               src="../assets/iot.png"
               alt="Interner Of Things (IoT)"
@@ -85,8 +87,8 @@
         </div>
 
         <!-- Card 2 -->
-        <div class="subject-card hover:shadow-lg transition">
-          <div class="circle bg-teal-100 mx-auto">
+        <div class="subject-card hover:shadow-lg transition flex flex-col justify-center items-center">
+          <div class="circle bg-teal-100 h-20 w-20 flex items-center justify-center">
             <img
               src="../assets/cyber-security.png"
               alt="Cyber Security"
@@ -98,8 +100,8 @@
         </div>
 
         <!-- Card 3 -->
-        <div class="subject-card hover:shadow-lg transition">
-          <div class="circle bg-teal-100 mx-auto">
+        <div class="subject-card hover:shadow-lg transition flex flex-col justify-center items-center">
+          <div class="circle bg-teal-100 h-20 w-20 flex items-center justify-center">
             <img
               src="../assets/cloud-computing_7213255.png"
               alt="Cloud Computing"
@@ -111,8 +113,8 @@
         </div>
 
         <!-- Card 4 -->
-        <div class="subject-card hover:shadow-lg transition">
-          <div class="circle bg-teal-100 mx-auto">
+        <div class="subject-card hover:shadow-lg transition flex flex-col justify-center items-center">
+          <div class="circle bg-teal-100 h-20 w-20 flex items-center justify-center">
             <img
               src="../assets/machine-learning.png"
               alt="Machine Learning"
@@ -124,8 +126,8 @@
         </div>
 
         <!-- Card 5 -->
-        <div class="subject-card hover:shadow-lg transition">
-          <div class="circle bg-teal-100 mx-auto">
+        <div class="subject-card hover:shadow-lg transition flex flex-col justify-center items-center">
+          <div class="circle bg-teal-100 h-20 w-20 flex items-center justify-center">
             <img
               src="../assets/pngwing.com.png"
               alt="Embedded System"
@@ -137,8 +139,8 @@
         </div>
 
         <!-- Card 6 -->
-        <div class="subject-card hover:shadow-lg transition">
-          <div class="circle bg-teal-100 mx-auto">
+        <div class="subject-card hover:shadow-lg transition flex flex-col justify-center items-center">
+          <div class="circle bg-teal-100 h-20 w-20 flex items-center justify-center">
             <img
               src="../assets/smart-city_3391472.png"
               alt="Engineering"
@@ -152,10 +154,9 @@
     </div>
 
     <!-- Expert Teachers Section -->
-    <div class="bg-gray-100 py-16">
+    <div class="teacher-section bg-gray-100 py-16 gradient-bg">
       <div class="text-center mb-8">
         <h2 class="text-3xl font-bold text-teal-600">Our Expert Teachers</h2>
-        <div class="mt-2 w-16 h-1 mx-auto bg-teal-600 rounded-full"></div>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-6 justify-center text-cente">
@@ -166,7 +167,7 @@
             alt="Teacher 1"
             class="w-full h-48 rounded-md object-cover mb-4"
           />
-          <h3 class="text-xl font-semibold text-gray-800">John Doe</h3>
+          <h3 class="text-xl font-semibold text-gray-800">Kenneth</h3>
           <p class="text-gray-500 text-md">Instructor</p>
         </div>
 
@@ -177,7 +178,7 @@
             alt="Teacher 2"
             class="w-full h-48 rounded-md object-cover mb-4"
           />
-          <h3 class="text-xl font-semibold text-gray-800">Jane Smith</h3>
+          <h3 class="text-xl font-semibold text-gray-800">AISYAH</h3>
           <p class="text-gray-500 text-md">Instructor</p>
         </div>
 
@@ -188,7 +189,7 @@
             alt="Teacher 3"
             class="w-full h-48 rounded-md object-cover mb-4"
           />
-          <h3 class="text-xl font-semibold text-gray-800">Emily Davis</h3>
+          <h3 class="text-xl font-semibold text-gray-800">Azza</h3>
           <p class="text-gray-500 text-md">Instructor</p>
         </div>
       </div>
@@ -197,6 +198,9 @@
 </template>
 
 <script>
+import Swiper from 'swiper';
+import 'swiper/swiper-bundle.css';
+
 export default {
   name: 'LoginPage',
   data() {
@@ -242,7 +246,9 @@ export default {
 
         if (response.ok) {
           if (data.user.role !== this.role) {
-            alert(`Username "${this.username}" and role "${this.role}" do not match.`);
+            alert(
+              `Username "${this.username}" and role "${this.role}" do not match.`
+            );
             return;
           }
 
@@ -254,7 +260,9 @@ export default {
           alert('Login successful!');
 
           // Redirect to role-specific route
-          this.$router.push({ path: data.user.role === 'admin' ? '/admin' : '/HomePageOperator' });
+          this.$router.push({
+            path: data.user.role === 'admin' ? '/admin' : '/HomePageOperator',
+          });
         } else {
           alert(data.message || 'Login failed.');
         }
@@ -263,9 +271,31 @@ export default {
         alert('Network error. Please check your connection.');
       }
     },
+    scrollToPopularSubjects() {
+      const element = document.getElementById('popular-subjects');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    },
+  },
+  mounted() {
+    new Swiper('.swiper-container', {
+      slidesPerView: 3, // Menampilkan 3 card per halaman
+      spaceBetween: 30, // Jarak antar card
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+    });
   },
 };
 </script>
+
+
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
@@ -277,10 +307,18 @@ export default {
   font-family: 'Poppins', sans-serif;
 }
 
-body {
+.body {
   background: url('../assets/TW2.JPG') no-repeat center center fixed;
   background-size: cover;
   overflow-y: auto;
+}
+
+.min-h-screen.bg-gray-50 {
+  margin-top: 5rem; /* Menambahkan jarak ke atas */
+}
+
+.gradient-bg {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0));
 }
 
 .wrapper {
@@ -359,6 +397,7 @@ body {
 }
 
 .hero-section {
+  background: linear-gradient(to bottom, transparent, #d1f5ff, transparent);
   font-family: 'Poppins', sans-serif;
 }
 
@@ -372,13 +411,20 @@ body {
 }
 
 .subject-card {
+  width: 280px; /* Semua box memiliki lebar tetap */
+  height: 200px; /* Tinggi tetap */
   background: white;
   padding: 1.5rem;
   border-radius: 0.5rem;
   border: 1px solid #e5e5e5;
   text-align: center;
   transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
 
 .subject-card:hover {
   transform: translateY(-4px);
@@ -393,6 +439,12 @@ body {
   justify-content: center;
 }
 
+/* Membuat jarak antara judul dan box */
+#popular-subjects h2,
+#expert-teachers h2 {
+  margin-bottom: 3rem;
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -400,13 +452,67 @@ body {
     gap: 20px;
 }
 
+.swiper-container {
+  width: 100%;
+  height: auto;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* Tambahkan lebih spesifik */
+.teacher-section bg-gray-100 py-16 gradient-bg {
+  padding-top: 4rem; /* Add top padding */
+  padding-bottom: 4rem; /* Add bottom padding */
+  margin-bottom: 40px; /* Add margin to the bottom to separate from footer */
+}
+
+.teacher-section h2 {
+  margin-bottom: 3rem; /* Ensure a comfortable distance from the top of the section */
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjust grid to have more flexible columns */
+  gap: 20px;
+  justify-items: center; /* Center content in the grid */
+}
+
 .teacher-card {
-    transition: all 0.3s ease;
-    min-height: 350px; /* Memanjangkan ke bawah */
-    padding: 20px;
+  width: 300px; /* Lebar lebih besar */
+  height: 350px; /* Tinggi otomatis sesuai konten */
+  margin: 0 auto; /* Tengahkan */
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e5e5;
+  text-align: center;
+  transition: all 0.3s ease;
+  
 }
 
 .teacher-card:hover {
-    transform: translateY(-5px);
+  transform: translateY(-5px); /* Animasi hover */
+}
+
+.teacher-card img {
+  max-height: 250px; /* Increased height of the image */
+  width: 100%;
+  object-fit: cover; /* Ensure the image covers the box area */
+  border-radius: 10px;
+}
+
+.teacher-card h3 {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.teacher-card p {
+  color: #555;
 }
 </style>
