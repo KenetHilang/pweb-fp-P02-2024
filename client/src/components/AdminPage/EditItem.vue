@@ -56,9 +56,10 @@ export default {
             }
 
             try {
-                await axios.patch(`http://localhost:4000/admin/${props.id}`, updatedItem , {
+                await axios.patch(`http://localhost:4000/admin/${props.id}`, updatedItem, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json',
                     },
                 });
                 alert('Item updated successfully!');

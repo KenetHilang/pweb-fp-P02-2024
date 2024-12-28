@@ -16,8 +16,8 @@ export default {
             image: '',
             name: '',
             age: null,
-            NoTelp: '',
-            Email: '',
+            noTelp: '',
+            email: '',
         });
 
         const fetchOperator = async () => {
@@ -32,8 +32,8 @@ export default {
                     image: operator.value.image || '',
                     name: operator.value.name || '',
                     age: operator.value.age || null,
-                    NoTelp: operator.value.NoTelp || '',
-                    Email: operator.value.Email || '',
+                    noTelp: operator.value.noTelp || '',
+                    email: operator.value.email || '',
                 };
             } catch (error) {
                 console.error('Error fetching operator:', error);
@@ -114,11 +114,11 @@ export default {
                 </div>
 
                 <div class="mb-5">
-                    <label for="NoTelp" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
+                    <label for="noTelp" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
                     <input
                         type="text"
-                        id="NoTelp"
-                        v-model="form.NoTelp"
+                        id="noTelp"
+                        v-model="form.noTelp"
                         placeholder="+1-123-456-7890"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                         required
@@ -126,11 +126,11 @@ export default {
                 </div>
 
                 <div class="mb-5">
-                    <label for="Email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                     <input
                         type="email"
-                        id="Email"
-                        v-model="form.Email"
+                        id="email"
+                        v-model="form.email"
                         placeholder="example@example.com"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                         required

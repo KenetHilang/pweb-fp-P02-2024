@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get("/", OperatorController.ShowAll);
 router.post("/", OperatorController.AddOperator);
-router.put("/:id", OperatorController.UpdateOperator);
+router.patch("/:id", OperatorController.UpdateOperator);
 router.delete("/:id", OperatorController.DeleteOperator);
 
 
